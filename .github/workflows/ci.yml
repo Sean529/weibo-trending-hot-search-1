@@ -21,7 +21,7 @@ jobs:
         run: |
           deno --version
       - name: Run deno fmt
-        run: deno fmt --check
+        run: deno fmt --check --ignore=.claude/
 
       - name: Run deno lint
         run: deno lint --unstable
