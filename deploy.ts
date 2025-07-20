@@ -10,16 +10,16 @@ async function handler(request: Request): Promise<Response> {
       // 从 GitHub 获取最新的 README.md 内容
       const readmeUrl = "https://raw.githubusercontent.com/Sean529/weibo-trending-hot-search-1/main/README.md";
       const response = await fetch(readmeUrl);
-      
+
       if (!response.ok) {
         throw new Error(`Failed to fetch README: ${response.statusText}`);
       }
-      
+
       const readmeContent = await response.text();
       return new Response(readmeContent, {
-        headers: { 
+        headers: {
           "content-type": "text/plain; charset=utf-8",
-          "cache-control": "public, max-age=300" // 缓存5分钟
+          "cache-control": "public, max-age=300", // 缓存5分钟
         },
       });
     } catch (error) {
