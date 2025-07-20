@@ -62,23 +62,44 @@ async function saveFileToGitHub(path: string, content: string, message: string):
   const data = encoder.encode(content);
   const encodedContent = btoa(String.fromCharCode(...data));
 
-  // 获取当前文件的 SHA（如果存在）
+  // 获取当前文件的 SHA（如果存在），多次重试以处理并发修改
   let sha: string | undefined;
-  try {
-    const existing = await githubApiRequest(`/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`);
-    sha = existing.sha;
-  } catch (_error) {
-    // 文件不存在，继续创建
-  }
+  let retries = 3;
 
-  await githubApiRequest(`/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
-    method: "PUT",
-    body: JSON.stringify({
-      message,
-      content: encodedContent,
-      sha,
-    }),
-  });
+  while (retries > 0) {
+    try {
+      // 重新获取最新的文件信息
+      try {
+        const existing = await githubApiRequest(`/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`);
+        sha = existing.sha;
+      } catch (_error) {
+        // 文件不存在，继续创建
+        sha = undefined;
+      }
+
+      await githubApiRequest(`/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          message,
+          content: encodedContent,
+          sha,
+        }),
+      });
+
+      // 成功则退出循环
+      break;
+    } catch (error) {
+      if (error.message.includes("409") && retries > 1) {
+        // 如果是冲突错误且还有重试次数，等待一会儿再试
+        console.log(`File conflict, retrying... (${retries - 1} attempts left)`);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        retries--;
+        continue;
+      }
+      // 其他错误或重试次数用完，抛出错误
+      throw error;
+    }
+  }
 }
 
 export async function loadFromStorage(date: string): Promise<Word[]> {
