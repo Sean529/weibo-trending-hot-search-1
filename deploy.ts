@@ -2,6 +2,7 @@
 import { scrapeTrendingTopics } from "./main.ts";
 import { loadFromStorage } from "./storage.ts";
 import { format } from "std/datetime/mod.ts";
+import type { Word } from "./types.ts";
 
 // 创建简单的 HTTP 服务器用于健康检查
 async function handler(request: Request): Promise<Response> {
@@ -11,7 +12,7 @@ async function handler(request: Request): Promise<Response> {
     try {
       // 获取今天的数据
       const today = format(new Date(), "yyyy-MM-dd");
-      let todayWords: any[] = [];
+      let todayWords: Word[] = [];
 
       try {
         todayWords = await loadFromStorage(today);
