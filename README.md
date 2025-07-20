@@ -11,7 +11,6 @@
 - [知乎热门话题](https://github.com/justjavac/zhihu-trending-hot-questions)
 - [知乎热门视频](https://github.com/justjavac/zhihu-trending-hot-video)
 
-
 ## 今日热门搜索
 
 <!-- BEGIN -->
