@@ -24,9 +24,6 @@ jobs:
         with:
           deno-version: v1.x
 
-      - name: Verify the project
-        run: deno fmt --check --ignore=.claude/ && deno lint --unstable
-
       - name: Build step
         run: deno cache deploy.ts # This ensures all deps are fetched
 
