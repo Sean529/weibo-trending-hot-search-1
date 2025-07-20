@@ -8,9 +8,7 @@
     "std/": "https://deno.land/std@0.79.0/"
   },
   "fmt": {
-    "options": {
-      "lineWidth": 120
-    }
+    "lineWidth": 120
   },
   "lock": false
 }
