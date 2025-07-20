@@ -46,8 +46,20 @@ async function renderHtmlPage(
   today: string,
 ): Promise<string> {
   try {
-    // 读取HTML模板
-    const template = await Deno.readTextFile("./template.html");
+    // 从 GitHub 或本地读取模板
+    let template: string;
+    
+    if (Deno.env.get("DENO_DEPLOYMENT_ID")) {
+      // Deno Deploy 环境：从 GitHub 获取模板
+      const templateContent = await fetch("https://raw.githubusercontent.com/Sean529/weibo-trending-hot-search/main/template.html");
+      if (!templateContent.ok) {
+        throw new Error(`Failed to fetch template: ${templateContent.status}`);
+      }
+      template = await templateContent.text();
+    } else {
+      // 本地环境：直接读取文件
+      template = await Deno.readTextFile("./template.html");
+    }
 
     // 准备替换变量
     const updateTime = new Date().toLocaleString("zh-CN", {
@@ -62,23 +74,23 @@ async function renderHtmlPage(
       .replace(/{{DATA_COUNT}}/g, todayWords.length.toString())
       .replace(/{{TRENDING_ITEMS}}/g, trendingItems);
   } catch (error) {
-    console.error("Failed to read template:", (error as Error).message);
-    // 如果模板读取失败，返回简单的错误页面
+    console.error("Failed to load template:", (error as Error).message);
+    // 如果模板加载失败，返回简单的HTML页面
     return `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>微博热搜榜 - 错误</title>
+    <title>微博热搜榜 - ${today}</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-        .error { color: #ff6b6b; font-size: 18px; }
+        .items { max-width: 600px; margin: 0 auto; text-align: left; }
+        .item { padding: 10px; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
-    <h1>🔥 微博热搜榜</h1>
-    <div class="error">
-        <p>页面模板加载失败</p>
-        <p>错误详情: ${(error as Error).message}</p>
+    <h1>🔥 微博热搜榜 - ${today}</h1>
+    <div class="items">
+        ${generateTrendingItems(todayWords)}
     </div>
 </body>
 </html>`;
@@ -99,8 +111,13 @@ async function handler(request: Request): Promise<Response> {
         todayWords = await loadFromStorage(today);
       } catch (error) {
         console.error("Failed to load from storage:", (error as Error).message);
-        // 如果加载失败，返回带错误信息的HTML页面
-        const errorHtml = await renderHtmlPage([], today);
+        // 如果加载失败，尝试使用最新的本地数据或提供示例数据
+        const fallbackData: Word[] = [
+          { title: "微博热搜数据加载中...", url: "/top/summary" },
+          { title: "请稍后刷新页面", url: "/top/summary" },
+          { title: "或检查服务配置", url: "/top/summary" }
+        ];
+        const errorHtml = await renderHtmlPage(fallbackData, today);
         return new Response(errorHtml, {
           headers: {
             "content-type": "text/html; charset=utf-8",
