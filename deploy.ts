@@ -27,30 +27,40 @@ function generateTrendingItems(todayWords: Word[]): string {
 
   return todayWords.map((word, index) => `
     <div class="trending-item">
-      <div class="rank ${index < 3 ? 'top3' : index < 10 ? 'top10' : ''}">${index + 1}</div>
-      <div class="title" onclick="openWeibo('${word.url}')" title="点击打开微博">${escapeHtml(word.title)}</div>
-      <button class="copy-btn" onclick="copyTitle('${escapeHtml(word.title).replace(/'/g, "\\'")}', this)">复制</button>
+      <div class="rank ${index < 3 ? "top3" : index < 10 ? "top10" : ""}">${
+    index + 1
+  }</div>
+      <div class="title" onclick="openWeibo('${word.url}')" title="点击打开微博">${
+    escapeHtml(word.title)
+  }</div>
+      <button class="copy-btn" onclick="copyTitle('${
+    escapeHtml(word.title).replace(/'/g, "\\'")
+  }', this)">复制</button>
     </div>
-  `).join('');
+  `).join("");
 }
 
 // 渲染HTML页面
-async function renderHtmlPage(todayWords: Word[], today: string): Promise<string> {
+async function renderHtmlPage(
+  todayWords: Word[],
+  today: string,
+): Promise<string> {
   try {
     // 读取HTML模板
     const template = await Deno.readTextFile("./template.html");
-    
+
     // 准备替换变量
-    const updateTime = new Date().toLocaleString("zh-CN", { timeZone: "Asia/Shanghai" });
+    const updateTime = new Date().toLocaleString("zh-CN", {
+      timeZone: "Asia/Shanghai",
+    });
     const trendingItems = generateTrendingItems(todayWords);
-    
+
     // 替换模板变量
     return template
       .replace(/{{TODAY}}/g, today)
       .replace(/{{UPDATE_TIME}}/g, updateTime)
       .replace(/{{DATA_COUNT}}/g, todayWords.length.toString())
       .replace(/{{TRENDING_ITEMS}}/g, trendingItems);
-      
   } catch (error) {
     console.error("Failed to read template:", (error as Error).message);
     // 如果模板读取失败，返回简单的错误页面
@@ -126,36 +136,45 @@ async function handler(request: Request): Promise<Response> {
         todayWords = await loadFromStorage(today);
       } catch (error) {
         console.error("Failed to load from storage:", (error as Error).message);
-        return new Response(JSON.stringify({
-          success: false,
-          error: `数据加载失败: ${(error as Error).message}`,
-          data: []
-        }), {
-          headers: { "content-type": "application/json; charset=utf-8" },
-        });
+        return new Response(
+          JSON.stringify({
+            success: false,
+            error: `数据加载失败: ${(error as Error).message}`,
+            data: [],
+          }),
+          {
+            headers: { "content-type": "application/json; charset=utf-8" },
+          },
+        );
       }
 
-      return new Response(JSON.stringify({
-        success: true,
-        data: todayWords,
-        date: today,
-        count: todayWords.length,
-        updateTime: new Date().toISOString()
-      }), {
-        headers: {
-          "content-type": "application/json; charset=utf-8",
-          "cache-control": "public, max-age=300", // 缓存5分钟
+      return new Response(
+        JSON.stringify({
+          success: true,
+          data: todayWords,
+          date: today,
+          count: todayWords.length,
+          updateTime: new Date().toISOString(),
+        }),
+        {
+          headers: {
+            "content-type": "application/json; charset=utf-8",
+            "cache-control": "public, max-age=300", // 缓存5分钟
+          },
         },
-      });
+      );
     } catch (error) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: `服务暂时不可用: ${(error as Error).message}`,
-        data: []
-      }), {
-        status: 500,
-        headers: { "content-type": "application/json; charset=utf-8" },
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: `服务暂时不可用: ${(error as Error).message}`,
+          data: [],
+        }),
+        {
+          status: 500,
+          headers: { "content-type": "application/json; charset=utf-8" },
+        },
+      );
     }
   }
 
