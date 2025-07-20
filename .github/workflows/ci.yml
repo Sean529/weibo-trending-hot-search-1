@@ -2,9 +2,9 @@ name: ci
 
 on:
   push:
-    branches: [release]
+    branches: [main]
   pull_request:
-    branches: [release]
+    branches: [main]
 
 jobs:
   build:
@@ -32,7 +32,7 @@ jobs:
         run: deno task test
 
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-main@v1
         if: |
           startsWith(github.repository, 'Sean529') &&
           startsWith(github.ref, 'refs/tags/')
