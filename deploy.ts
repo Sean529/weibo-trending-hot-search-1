@@ -208,7 +208,7 @@ async function handler(request: Request): Promise<Response> {
       return new Response(
         JSON.stringify({
           success: false,
-          error: error.message,
+          error: (error as Error).message,
           timestamp: new Date().toISOString(),
         }),
         {
