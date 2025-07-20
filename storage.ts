@@ -42,10 +42,10 @@ async function getFileFromGitHub(path: string): Promise<string | null> {
     }
     return null;
   } catch (_error) {
-    if (error.message.includes("404")) {
+    if (_error.message.includes("404")) {
       return null; // 文件不存在
     }
-    throw error;
+    throw _error;
   }
 }
 
