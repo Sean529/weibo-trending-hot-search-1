@@ -11,7 +11,8 @@
       "Bash(deno fmt:*)",
       "Bash(git push:*)",
       "Bash(git add:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(git commit:*)"
     ],
     "deny": []
   }
