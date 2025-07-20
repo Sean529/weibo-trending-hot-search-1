@@ -6,9 +6,28 @@ async function handler(request: Request): Promise<Response> {
   const url = new URL(request.url);
 
   if (url.pathname === "/") {
-    return new Response("Weibo Trending Scraper is running", {
-      headers: { "content-type": "text/plain" },
-    });
+    try {
+      // 从 GitHub 获取最新的 README.md 内容
+      const readmeUrl = "https://raw.githubusercontent.com/Sean529/weibo-trending-hot-search-1/main/README.md";
+      const response = await fetch(readmeUrl);
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch README: ${response.statusText}`);
+      }
+      
+      const readmeContent = await response.text();
+      return new Response(readmeContent, {
+        headers: { 
+          "content-type": "text/plain; charset=utf-8",
+          "cache-control": "public, max-age=300" // 缓存5分钟
+        },
+      });
+    } catch (error) {
+      return new Response(`Error loading README.md: ${error.message}`, {
+        status: 500,
+        headers: { "content-type": "text/plain" },
+      });
+    }
   }
 
   if (url.pathname === "/health") {
