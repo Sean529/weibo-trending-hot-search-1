@@ -4,16 +4,17 @@ import { format } from "std/datetime/mod.ts";
 
 import type { Word } from "./types.ts";
 import { mergeWords } from "./utils.ts";
-import { saveToStorage, loadFromStorage } from "./storage.ts";
+import { loadFromStorage, saveToStorage } from "./storage.ts";
 
 const regexp = /<a href="(\/weibo\?q=[^"]+)".*?>(.+)<\/a>/g;
 
 export async function scrapeTrendingTopics() {
   console.log(`开始抓取微博热搜 - ${new Date().toISOString()}`);
-  
+
   const response = await fetch("https://s.weibo.com/top/summary", {
     headers: {
-      "Cookie": Deno.env.get("WEIBO_COOKIE") || "SUB=_2AkMWJrkXf8NxqwJRmP8SxWjnaY12zwnEieKgekjMJRMxHRl-yj9jqmtbtRB6PaaX-IGp-AjmO6k5cS-OH2X9CayaTzVD",
+      "Cookie": Deno.env.get("WEIBO_COOKIE") ||
+        "SUB=_2AkMWJrkXf8NxqwJRmP8SxWjnaY12zwnEieKgekjMJRMxHRl-yj9jqmtbtRB6PaaX-IGp-AjmO6k5cS-OH2X9CayaTzVD",
     },
   });
 
@@ -35,16 +36,16 @@ export async function scrapeTrendingTopics() {
   }
 
   const yyyyMMdd = format(new Date(), "yyyy-MM-dd");
-  
+
   // 从存储中加载已有数据
   const wordsAlreadyDownload = await loadFromStorage(yyyyMMdd);
-  
+
   // 合并数据
   const mergedWords = mergeWords(words, wordsAlreadyDownload);
-  
+
   // 保存到存储
   await saveToStorage(yyyyMMdd, mergedWords);
-  
+
   console.log(`成功更新 ${mergedWords.length} 条热搜数据`);
 }
 

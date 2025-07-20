@@ -4,7 +4,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is an automated Weibo trending topics tracker that scrapes trending search data hourly and maintains historical archives. The project tracks Chinese social media trends from Weibo (微博) starting from 2020-11-24.
+This is an automated Weibo trending topics tracker that scrapes trending search data hourly and maintains historical
+archives. The project tracks Chinese social media trends from Weibo (微博) starting from 2020-11-24.
 
 ## Technology Stack
 
@@ -29,21 +30,24 @@ deno run --allow-net --allow-read --allow-write main.ts
 ## Architecture
 
 ### Core Files
+
 - `main.ts` - Main scraping script that fetches from Weibo API
 - `utils.ts` - Data processing utilities (mergeWords, createArchive, createReadme)
 - `types.ts` - TypeScript interfaces (Word type definition)
 - `utils.test.ts` - Test suite
 
 ### Data Flow
+
 1. Scrapes `https://s.weibo.com/top/summary` using regex parsing
 2. Extracts trending topics into Word objects (url, title)
 3. Merges with existing daily data (deduplicates by title)
 4. Updates three outputs:
    - Raw JSON in `/raw/YYYY-MM-DD.json`
-   - Daily archive in `/archives/YYYY-MM-DD.md`  
+   - Daily archive in `/archives/YYYY-MM-DD.md`
    - Live README.md with current trends
 
 ### Directory Structure
+
 - `/raw/` - Raw JSON data files by date
 - `/archives/` - Daily markdown archives
 - `/.github/workflows/` - CI (`ci.yml`) and hourly scheduling (`schedule.yml`)
@@ -65,4 +69,5 @@ deno run --allow-net --allow-read --allow-write main.ts
 
 ## Testing
 
-Tests focus on utility functions for data processing and file generation. All tests require network, read, and write permissions due to the nature of the scraping operations.
+Tests focus on utility functions for data processing and file generation. All tests require network, read, and write
+permissions due to the nature of the scraping operations.

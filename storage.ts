@@ -41,7 +41,7 @@ async function getFileFromGitHub(path: string): Promise<string | null> {
       return atob(data.content.replace(/\n/g, ""));
     }
     return null;
-  } catch (error) {
+  } catch (_error) {
     if (error.message.includes("404")) {
       return null; // 文件不存在
     }
@@ -51,13 +51,13 @@ async function getFileFromGitHub(path: string): Promise<string | null> {
 
 async function saveFileToGitHub(path: string, content: string, message: string): Promise<void> {
   const encodedContent = btoa(content);
-  
+
   // 获取当前文件的 SHA（如果存在）
   let sha: string | undefined;
   try {
     const existing = await githubApiRequest(`/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`);
     sha = existing.sha;
-  } catch (error) {
+  } catch (_error) {
     // 文件不存在，继续创建
   }
 
@@ -89,7 +89,7 @@ export async function loadFromStorage(date: string): Promise<Word[]> {
 
 export async function saveToStorage(date: string, words: Word[]): Promise<void> {
   const timestamp = new Date().toISOString();
-  
+
   if (isDenoDeployment) {
     // 在 Deno Deploy 环境中保存到 GitHub
     const jsonContent = JSON.stringify(words, null, 2);
@@ -106,10 +106,10 @@ export async function saveToStorage(date: string, words: Word[]): Promise<void> 
     // 本地环境保存到文件系统
     const jsonContent = JSON.stringify(words, null, 2);
     const archiveContent = createArchive(words, date);
-    
+
     await Deno.writeTextFile(`raw/${date}.json`, jsonContent);
     await Deno.writeTextFile(`archives/${date}.md`, archiveContent);
-    
+
     // 更新 README
     const readmeContent = await createReadme(words);
     await Deno.writeTextFile("README.md", readmeContent);
@@ -123,13 +123,13 @@ async function generateUpdatedReadme(words: Word[]): Promise<string> {
     if (!currentReadme) {
       throw new Error("Could not fetch current README.md from GitHub");
     }
-    
+
     // 使用相同的替换逻辑
     const listContent = `<!-- BEGIN -->
 <!-- 最后更新时间 ${Date()} -->
 ${words.map((x) => `1. [${x.title}](https://s.weibo.com/${x.url})`).join("\n")}
 <!-- END -->`;
-    
+
     return currentReadme.replace(/<!-- BEGIN -->[\W\w]*<!-- END -->/, listContent);
   } else {
     // 本地环境直接使用 utils.ts 中的函数
