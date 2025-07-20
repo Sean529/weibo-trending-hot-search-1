@@ -4,3 +4,6 @@
 *bak
 .history
 .temp/**
+
+# Claude Code local settings - exclude from version control to avoid formatting issues
+.claude/settings.local.json
