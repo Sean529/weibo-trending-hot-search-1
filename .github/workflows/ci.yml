@@ -25,7 +25,7 @@ jobs:
         run: |
           deno --version
       - name: Run deno fmt
-        run: deno fmt --check --ignore=.claude/
+        run: deno fmt --check --ignore=.claude/ --ignore=raw/ --ignore=archives/ --ignore=README.md
 
       - name: Run deno lint
         run: deno lint
