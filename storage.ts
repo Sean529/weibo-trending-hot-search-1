@@ -38,7 +38,14 @@ async function getFileFromGitHub(path: string): Promise<string | null> {
   try {
     const data = await githubApiRequest(`/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`);
     if (data.content) {
-      return atob(data.content.replace(/\n/g, ""));
+      // 使用 TextDecoder 处理中文字符
+      const binaryString = atob(data.content.replace(/\n/g, ""));
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      const decoder = new TextDecoder();
+      return decoder.decode(bytes);
     }
     return null;
   } catch (_error) {
@@ -50,7 +57,10 @@ async function getFileFromGitHub(path: string): Promise<string | null> {
 }
 
 async function saveFileToGitHub(path: string, content: string, message: string): Promise<void> {
-  const encodedContent = btoa(content);
+  // 使用 TextEncoder 处理中文字符
+  const encoder = new TextEncoder();
+  const data = encoder.encode(content);
+  const encodedContent = btoa(String.fromCharCode(...data));
 
   // 获取当前文件的 SHA（如果存在）
   let sha: string | undefined;
