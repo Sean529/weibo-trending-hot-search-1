@@ -9,7 +9,9 @@
       "Bash(deno lint:*)",
       "Bash(deno task:*)",
       "Bash(deno fmt:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(git add:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }
