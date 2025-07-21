@@ -29,6 +29,28 @@ export function appendWords(
   return [...existingWords, ...newWords];
 }
 
+/**
+ * 追加新的热搜数据到已有数据中，去除重复条目
+ * 保持时间顺序，如果存在相同标题和URL的条目则跳过
+ */
+export function appendWordsWithDedup(
+  existingWords: Word[],
+  newWords: Word[],
+): Word[] {
+  // 创建已存在条目的Set，用于快速查找
+  const existingSet = new Set(
+    existingWords.map(word => `${word.title}||${word.url}`)
+  );
+  
+  // 过滤掉重复的新条目
+  const uniqueNewWords = newWords.filter(word => {
+    const key = `${word.title}||${word.url}`;
+    return !existingSet.has(key);
+  });
+  
+  return [...existingWords, ...uniqueNewWords];
+}
+
 export async function createReadme(words: Word[]): Promise<string> {
   const readme = await Deno.readTextFile("./README.md");
   return readme.replace(/<!-- BEGIN -->[\W\w]*<!-- END -->/, createList(words));

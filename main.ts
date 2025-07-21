@@ -3,7 +3,7 @@
 import { format } from "std/datetime/mod.ts";
 
 import type { Word } from "./types.ts";
-import { appendWords, mergeWords } from "./utils.ts";
+import { appendWordsWithDedup, mergeWords } from "./utils.ts";
 import { loadFromStorage, saveToStorage } from "./storage.ts";
 
 const regexp = /<a href="(\/weibo\?q=[^"]+)".*?>(.+)<\/a>/g;
@@ -45,7 +45,7 @@ export async function scrapeTrendingTopics() {
   
   // 合并数据
   const finalWords = useAppendMode 
-    ? appendWords(wordsAlreadyDownload, words)  // 追加模式：保留所有条目
+    ? appendWordsWithDedup(wordsAlreadyDownload, words)  // 追加模式：保留所有条目但去重
     : mergeWords(words, wordsAlreadyDownload);   // 合并模式：去重相同标题
 
   // 保存到存储

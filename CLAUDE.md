@@ -60,8 +60,8 @@ deno run --allow-net --allow-read --allow-write main.ts
 - **Timezone**: Uses Asia/Shanghai for consistent date handling
 - **Authentication**: Requires Weibo cookie in headers for API access
 - **Data Accumulation**: 
-  - **Append Mode** (`WEIBO_APPEND_MODE=true`): Keeps all hourly updates, no deduplication
-  - **Merge Mode** (default): Smart merging prevents duplicate trending topics by title
+  - **Append Mode** (`WEIBO_APPEND_MODE=true`): Appends all hourly updates with deduplication by title+URL
+  - **Merge Mode** (default): Smart merging prevents duplicate trending topics by title only
 - **Error Handling**: Exits with -1 on failed HTTP requests
 - **Date Format**: Uses `std/datetime/mod.ts` for YYYY-MM-DD formatting
 
