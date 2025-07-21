@@ -1,11 +1,13 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with
+code in this repository.
 
 ## Project Overview
 
-This is an automated Weibo trending topics tracker that scrapes trending search data hourly and maintains historical
-archives. The project tracks Chinese social media trends from Weibo (微博) starting from 2020-11-24.
+This is an automated Weibo trending topics tracker that scrapes trending search
+data hourly and maintains historical archives. The project tracks Chinese social
+media trends from Weibo (微博) starting from 2020-11-24.
 
 ## Technology Stack
 
@@ -32,7 +34,8 @@ deno run --allow-net --allow-read --allow-write main.ts
 ### Core Files
 
 - `main.ts` - Main scraping script that fetches from Weibo API
-- `utils.ts` - Data processing utilities (mergeWords, createArchive, createReadme)
+- `utils.ts` - Data processing utilities (mergeWords, createArchive,
+  createReadme)
 - `types.ts` - TypeScript interfaces (Word type definition)
 - `utils.test.ts` - Test suite
 
@@ -69,5 +72,6 @@ deno run --allow-net --allow-read --allow-write main.ts
 
 ## Testing
 
-Tests focus on utility functions for data processing and file generation. All tests require network, read, and write
-permissions due to the nature of the scraping operations.
+Tests focus on utility functions for data processing and file generation. All
+tests require network, read, and write permissions due to the nature of the
+scraping operations.

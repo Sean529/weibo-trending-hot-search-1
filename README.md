@@ -3,7 +3,8 @@
 [![Build Status](https://github.com/justjavac/weibo-trending-hot-search/workflows/ci/badge.svg?branch=master)](https://github.com/justjavac/weibo-trending-hot-search/actions)
 [![license](https://img.shields.io/github/license/justjavac/weibo-trending-hot-search)](https://github.com/justjavac/weibo-trending-hot-search/blob/master/LICENSE)
 
-微博热搜榜，记录从 2020-11-24 日开始的微博热门搜索。每小时抓取一次数据，按天[归档](./archives)。
+微博热搜榜，记录从 2020-11-24
+日开始的微博热门搜索。每小时抓取一次数据，按天[归档](./archives)。
 
 ## 相关项目
 
@@ -69,5 +70,5 @@
 1. [朝雪录待嫁少女连环被害](https://s.weibo.com//weibo?q=%E6%9C%9D%E9%9B%AA%E5%BD%95%E5%BE%85%E5%AB%81%E5%B0%91%E5%A5%B3%E8%BF%9E%E7%8E%AF%E8%A2%AB%E5%AE%B3&t=31&band_rank=50&Refer=top)
 1. [老板吐槽客人吃饭剩太多](https://s.weibo.com//weibo?q=%E8%80%81%E6%9D%BF%E5%90%90%E6%A7%BD%E5%AE%A2%E4%BA%BA%E5%90%83%E9%A5%AD%E5%89%A9%E5%A4%AA%E5%A4%9A&t=31&band_rank=49&Refer=top)
 
-[weibo-trending-hot-search](https://github.com/justjavac/weibo-trending-hot-search) 的源码使用 MIT License
-发布。具体内容请查看 [LICENSE](./LICENSE) 文件。
+[weibo-trending-hot-search](https://github.com/justjavac/weibo-trending-hot-search)
+的源码使用 MIT License 发布。具体内容请查看 [LICENSE](./LICENSE) 文件。

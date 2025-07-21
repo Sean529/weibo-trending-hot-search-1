@@ -6,7 +6,8 @@
 
 #### 1. GitHub Personal Access Token
 
-1. 访问 [GitHub Settings > Developer settings > Personal access tokens](https://github.com/settings/tokens)
+1. 访问
+   [GitHub Settings > Developer settings > Personal access tokens](https://github.com/settings/tokens)
 2. 选择 **Fine-grained tokens** (推荐) 或 Classic tokens
 3. **Fine-grained tokens 权限**:
    - `Contents`: **Read and write** (读写仓库文件)
@@ -71,7 +72,8 @@ WEIBO_COOKIE=your_custom_cookie (可选)
 
 ### 第二步：创建 Deno Deploy 项目
 
-1. **登录 Deno Deploy**: 使用 GitHub 账户登录 [dash.deno.com](https://dash.deno.com)
+1. **登录 Deno Deploy**: 使用 GitHub 账户登录
+   [dash.deno.com](https://dash.deno.com)
 2. **新建项目**: 点击 "New Project"
 3. **连接仓库**: 选择 `Sean529/weibo-trending-hot-search-1`
 4. **项目配置**:
@@ -123,7 +125,9 @@ WEIBO_COOKIE=your_custom_cookie (可选)
 
 #### 1. GitHub API 403 错误
 
-**错误**: `GitHub API error: 403 Resource not accessible by personal access token` **解决**:
+**错误**:
+`GitHub API error: 403 Resource not accessible by personal access token`
+**解决**:
 
 - 检查 token 权限是否包含 `Contents: Read and write`
 - 确认 token 未过期
@@ -131,16 +135,19 @@ WEIBO_COOKIE=your_custom_cookie (可选)
 
 #### 2. 中文编码错误
 
-**错误**: `Cannot encode string: string contains characters outside of the Latin1 range` **解决**: 已修复，使用
-`TextEncoder/TextDecoder` 处理 UTF-8 编码
+**错误**:
+`Cannot encode string: string contains characters outside of the Latin1 range`
+**解决**: 已修复，使用 `TextEncoder/TextDecoder` 处理 UTF-8 编码
 
 #### 3. Git 冲突错误
 
-**错误**: `GitHub API error: 409 is at xxx but expected yyy` **解决**: 已实现重试机制，自动解决并发修改冲突
+**错误**: `GitHub API error: 409 is at xxx but expected yyy` **解决**:
+已实现重试机制，自动解决并发修改冲突
 
 #### 4. 格式化失败
 
-**错误**: `deno fmt --check` 在 CI 中失败 **解决**: `.claude/settings.local.json` 已添加到 `.gitignore`
+**错误**: `deno fmt --check` 在 CI 中失败 **解决**:
+`.claude/settings.local.json` 已添加到 `.gitignore`
 
 ### 调试命令
 

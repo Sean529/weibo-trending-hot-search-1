@@ -48,10 +48,12 @@ async function renderHtmlPage(
   try {
     // 从 GitHub 或本地读取模板
     let template: string;
-    
+
     if (Deno.env.get("DENO_DEPLOYMENT_ID")) {
       // Deno Deploy 环境：从 GitHub 获取模板
-      const templateContent = await fetch("https://raw.githubusercontent.com/Sean529/weibo-trending-hot-search/main/template.html");
+      const templateContent = await fetch(
+        "https://raw.githubusercontent.com/Sean529/weibo-trending-hot-search-1/main/template.html",
+      );
       if (!templateContent.ok) {
         throw new Error(`Failed to fetch template: ${templateContent.status}`);
       }
@@ -115,7 +117,7 @@ async function handler(request: Request): Promise<Response> {
         const fallbackData: Word[] = [
           { title: "微博热搜数据加载中...", url: "/top/summary" },
           { title: "请稍后刷新页面", url: "/top/summary" },
-          { title: "或检查服务配置", url: "/top/summary" }
+          { title: "或检查服务配置", url: "/top/summary" },
         ];
         const errorHtml = await renderHtmlPage(fallbackData, today);
         return new Response(errorHtml, {

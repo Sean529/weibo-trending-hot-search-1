@@ -4,7 +4,8 @@ import { createArchive, createReadme } from "./utils.ts";
 // GitHub API 配置
 const GITHUB_API_BASE = "https://api.github.com";
 const REPO_OWNER = Deno.env.get("GITHUB_REPO_OWNER") || "justjavac";
-const REPO_NAME = Deno.env.get("GITHUB_REPO_NAME") || "weibo-trending-hot-search";
+const REPO_NAME = Deno.env.get("GITHUB_REPO_NAME") ||
+  "weibo-trending-hot-search";
 const GITHUB_TOKEN = Deno.env.get("GITHUB_TOKEN");
 
 // 检查是否运行在 Deno Deploy 环境
@@ -12,7 +13,9 @@ const isDenoDeployment = !!Deno.env.get("DENO_DEPLOYMENT_ID");
 
 async function githubApiRequest(endpoint: string, options: RequestInit = {}) {
   if (!GITHUB_TOKEN) {
-    throw new Error("GITHUB_TOKEN environment variable is required for GitHub API access");
+    throw new Error(
+      "GITHUB_TOKEN environment variable is required for GitHub API access",
+    );
   }
 
   const url = `${GITHUB_API_BASE}${endpoint}`;
@@ -36,7 +39,9 @@ async function githubApiRequest(endpoint: string, options: RequestInit = {}) {
 
 async function getFileFromGitHub(path: string): Promise<string | null> {
   try {
-    const data = await githubApiRequest(`/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`);
+    const data = await githubApiRequest(
+      `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`,
+    );
     if (data.content) {
       // 使用 TextDecoder 处理中文字符
       const binaryString = atob(data.content.replace(/\n/g, ""));
@@ -56,7 +61,11 @@ async function getFileFromGitHub(path: string): Promise<string | null> {
   }
 }
 
-async function saveFileToGitHub(path: string, content: string, message: string): Promise<void> {
+async function saveFileToGitHub(
+  path: string,
+  content: string,
+  message: string,
+): Promise<void> {
   // 使用 TextEncoder 处理中文字符
   const encoder = new TextEncoder();
   const data = encoder.encode(content);
@@ -70,28 +79,35 @@ async function saveFileToGitHub(path: string, content: string, message: string):
     try {
       // 重新获取最新的文件信息
       try {
-        const existing = await githubApiRequest(`/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`);
+        const existing = await githubApiRequest(
+          `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`,
+        );
         sha = existing.sha;
       } catch (_error) {
         // 文件不存在，继续创建
         sha = undefined;
       }
 
-      await githubApiRequest(`/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
-        method: "PUT",
-        body: JSON.stringify({
-          message,
-          content: encodedContent,
-          sha,
-        }),
-      });
+      await githubApiRequest(
+        `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            message,
+            content: encodedContent,
+            sha,
+          }),
+        },
+      );
 
       // 成功则退出循环
       break;
     } catch (error) {
       if (error.message.includes("409") && retries > 1) {
         // 如果是冲突错误且还有重试次数，等待一会儿再试
-        console.log(`File conflict, retrying... (${retries - 1} attempts left)`);
+        console.log(
+          `File conflict, retrying... (${retries - 1} attempts left)`,
+        );
         await new Promise((resolve) => setTimeout(resolve, 1000));
         retries--;
         continue;
@@ -118,7 +134,10 @@ export async function loadFromStorage(date: string): Promise<Word[]> {
   }
 }
 
-export async function saveToStorage(date: string, words: Word[]): Promise<void> {
+export async function saveToStorage(
+  date: string,
+  words: Word[],
+): Promise<void> {
   const timestamp = new Date().toISOString();
 
   if (isDenoDeployment) {
@@ -129,9 +148,21 @@ export async function saveToStorage(date: string, words: Word[]): Promise<void> 
 
     // 并行保存三个文件
     await Promise.all([
-      saveFileToGitHub(`raw/${date}.json`, jsonContent, `Update trending data for ${date} - ${timestamp}`),
-      saveFileToGitHub(`archives/${date}.md`, archiveContent, `Update archive for ${date} - ${timestamp}`),
-      saveFileToGitHub("README.md", readmeContent, `Update README with latest trending topics - ${timestamp}`),
+      saveFileToGitHub(
+        `raw/${date}.json`,
+        jsonContent,
+        `Update trending data for ${date} - ${timestamp}`,
+      ),
+      saveFileToGitHub(
+        `archives/${date}.md`,
+        archiveContent,
+        `Update archive for ${date} - ${timestamp}`,
+      ),
+      saveFileToGitHub(
+        "README.md",
+        readmeContent,
+        `Update README with latest trending topics - ${timestamp}`,
+      ),
     ]);
   } else {
     // 本地环境保存到文件系统
@@ -161,7 +192,10 @@ async function generateUpdatedReadme(words: Word[]): Promise<string> {
 ${words.map((x) => `1. [${x.title}](https://s.weibo.com/${x.url})`).join("\n")}
 <!-- END -->`;
 
-    return currentReadme.replace(/<!-- BEGIN -->[\W\w]*<!-- END -->/, listContent);
+    return currentReadme.replace(
+      /<!-- BEGIN -->[\W\w]*<!-- END -->/,
+      listContent,
+    );
   } else {
     // 本地环境直接使用 utils.ts 中的函数
     return await createReadme(words);
