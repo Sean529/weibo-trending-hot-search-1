@@ -3,7 +3,7 @@
 import { format } from "std/datetime/mod.ts";
 
 import type { Word } from "./types.ts";
-import { mergeWords } from "./utils.ts";
+import { appendWords, mergeWords } from "./utils.ts";
 import { loadFromStorage, saveToStorage } from "./storage.ts";
 
 const regexp = /<a href="(\/weibo\?q=[^"]+)".*?>(.+)<\/a>/g;
@@ -40,13 +40,18 @@ export async function scrapeTrendingTopics() {
   // 从存储中加载已有数据
   const wordsAlreadyDownload = await loadFromStorage(yyyyMMdd);
 
+  // 检查环境变量决定使用追加模式还是合并模式
+  const useAppendMode = Deno.env.get("WEIBO_APPEND_MODE") === "true";
+  
   // 合并数据
-  const mergedWords = mergeWords(words, wordsAlreadyDownload);
+  const finalWords = useAppendMode 
+    ? appendWords(wordsAlreadyDownload, words)  // 追加模式：保留所有条目
+    : mergeWords(words, wordsAlreadyDownload);   // 合并模式：去重相同标题
 
   // 保存到存储
-  await saveToStorage(yyyyMMdd, mergedWords);
+  await saveToStorage(yyyyMMdd, finalWords);
 
-  console.log(`成功更新 ${mergedWords.length} 条热搜数据`);
+  console.log(`成功更新 ${finalWords.length} 条热搜数据 (${useAppendMode ? '追加模式' : '合并模式'})`);
 }
 
 // Deno Deploy 定时任务

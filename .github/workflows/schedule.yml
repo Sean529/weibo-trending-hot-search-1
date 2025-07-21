@@ -10,6 +10,7 @@ jobs:
 
     env:
       TZ: Asia/Shanghai
+      WEIBO_APPEND_MODE: "true"
 
     steps:
       - name: Clone repository

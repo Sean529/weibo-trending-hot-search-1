@@ -19,6 +19,16 @@ export function mergeWords(
   }));
 }
 
+/**
+ * 追加新的热搜数据到已有数据中，保留所有条目（不去重）
+ */
+export function appendWords(
+  existingWords: Word[],
+  newWords: Word[],
+): Word[] {
+  return [...existingWords, ...newWords];
+}
+
 export async function createReadme(words: Word[]): Promise<string> {
   const readme = await Deno.readTextFile("./README.md");
   return readme.replace(/<!-- BEGIN -->[\W\w]*<!-- END -->/, createList(words));
