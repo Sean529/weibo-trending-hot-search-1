@@ -27,7 +27,7 @@ function generateTrendingItems(todayWords: Word[]): string {
   }
 
   return todayWords.map((word, index) => `
-    <div class="trending-item-1">
+    <div class="trending-item">
       <div class="rank ${index < 3 ? "top3" : index < 10 ? "top10" : ""}">${index + 1}</div>
       <div class="title" onclick="openWeibo('${word.url}')" title="点击打开微博">${escapeHtml(word.title)}</div>
       <button class="copy-btn" onclick="copyTitle('${escapeHtml(word.title).replace(/'/g, "\\'")}', this)">复制</button>
