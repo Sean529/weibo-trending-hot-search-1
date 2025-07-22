@@ -256,11 +256,11 @@ async function handler(request: Request): Promise<Response> {
 }
 
 // 启动 HTTP 服务器
-Deno.serve(handler);
+Deno.serve({ port: 3080 }, handler);
 
 // 控制台启动信息日志
 console.log("🚀 Weibo Trending Scraper started on Deno Deploy");
 console.log("⏰ Cron job scheduled: every hour at minute 0");
 console.log("🔗 Health check: /health");
 console.log("🔧 Manual trigger: POST /trigger");
-console.log("🏠 Homepage: / (微博热搜榜)"); 
+console.log("🏠 Homepage: / (微博热搜榜)");

@@ -223,7 +223,15 @@
       <div class="stats">
         共 {{DATA_COUNT}} 条热搜 | 点击标题打开微博 | 点击复制按钮复制标题
       </div>
-
+      <!-- 筛选 UI 开始 -->
+      <div class="filter-bar" style="padding: 12px 30px; text-align: right; background: #f8f9fa; border-bottom: 1px solid #f0f0f0;">
+        <label for="type-filter" style="font-size: 14px; color: #666; margin-right: 8px;">筛选类型:</label>
+        <select id="type-filter" style="padding: 6px 12px; border-radius: 4px; border: 1px solid #ddd; font-size: 14px;">
+          <option value="all">全部</option>
+          <option value="社会">社会</option>
+        </select>
+      </div>
+      <!-- 筛选 UI 结束 -->
       <div class="content">
         {{TRENDING_ITEMS}}
       </div>
@@ -327,6 +335,14 @@
 
         return false;
       }
+
+      // TODO: 实现筛选功能，当前仅UI，未做实际筛选
+      document.getElementById('type-filter').addEventListener('change', function(e) {
+        const selectedType = e.target.value;
+        // TODO: 根据 selectedType 筛选展示的词条（如 type 字段为“社会”）
+        // 目前仅做UI反馈，无实际筛选逻辑
+        showNotification('筛选类型: ' + (selectedType === 'all' ? '全部' : selectedType));
+      });
     </script>
   </body>
 </html>
