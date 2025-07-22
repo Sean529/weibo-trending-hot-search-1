@@ -1,10 +1,10 @@
 # weibo-trending-hot-search
 
-[![Build Status](https://github.com/justjavac/weibo-trending-hot-search/workflows/ci/badge.svg?branch=master)](https://github.com/justjavac/weibo-trending-hot-search/actions)
+[![Deno Deploy](https://img.shields.io/badge/Deployed%20on-Deno%20Deploy-blue?logo=deno)](https://dash.deno.com)
 [![license](https://img.shields.io/github/license/justjavac/weibo-trending-hot-search)](https://github.com/justjavac/weibo-trending-hot-search/blob/master/LICENSE)
 
-微博热搜榜，记录从 2020-11-24
-日开始的微博热门搜索。每小时抓取一次数据，按天[归档](./archives)。
+微博热搜榜，记录从 2025-07-22 日开始的微博热门搜索。每小时通过 Deno Deploy
+定时任务抓取一次数据，按天[归档](./archives)。
 
 ## 相关项目
 
@@ -70,5 +70,25 @@
 1. [朝雪录待嫁少女连环被害](https://s.weibo.com//weibo?q=%E6%9C%9D%E9%9B%AA%E5%BD%95%E5%BE%85%E5%AB%81%E5%B0%91%E5%A5%B3%E8%BF%9E%E7%8E%AF%E8%A2%AB%E5%AE%B3&t=31&band_rank=50&Refer=top)
 1. [老板吐槽客人吃饭剩太多](https://s.weibo.com//weibo?q=%E8%80%81%E6%9D%BF%E5%90%90%E6%A7%BD%E5%AE%A2%E4%BA%BA%E5%90%83%E9%A5%AD%E5%89%A9%E5%A4%AA%E5%A4%9A&t=31&band_rank=49&Refer=top)
 
-[weibo-trending-hot-search](https://github.com/justjavac/weibo-trending-hot-search)
-的源码使用 MIT License 发布。具体内容请查看 [LICENSE](./LICENSE) 文件。
+<!-- END -->
+
+## 部署说明
+
+本项目使用 Deno Deploy 进行自动化部署和定时任务执行。
+
+### 快速部署
+
+1. Fork 此仓库到您的 GitHub 账户
+2. 访问 [Deno Deploy](https://dash.deno.com) 并使用 GitHub 登录
+3. 创建新项目，连接到您 fork 的仓库
+4. 设置入口文件为 `deploy-cron.ts`
+5. 配置必要的环境变量（详见 [DENO_DEPLOY.md](./DENO_DEPLOY.md)）
+
+### 环境变量
+
+- `GITHUB_TOKEN` - GitHub Personal Access Token
+- `WEIBO_COOKIE` - 微博登录 Cookie
+- `GITHUB_REPO_OWNER` - GitHub 用户名
+- `GITHUB_REPO_NAME` - 仓库名称
+
+详细部署指南请参考 [DENO_DEPLOY.md](./DENO_DEPLOY.md)

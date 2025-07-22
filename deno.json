@@ -1,0 +1,20 @@
+{
+  "tasks": {
+    "start": "deno run --allow-net --allow-read --allow-write --allow-env --unstable-cron main.ts",
+    "test": "deno test --allow-net --allow-read --allow-write --allow-env utils.test.ts",
+    "deploy": "deno run --allow-net --allow-read --allow-write --allow-env --unstable-cron deploy-cron.ts"
+  },
+  "fmt": {
+    "lineWidth": 120,
+    "indentWidth": 2,
+    "semiColons": true
+  },
+  "lint": {
+    "rules": {
+      "tags": ["recommended"]
+    }
+  },
+  "imports": {
+    "std/": "https://deno.land/std@0.208.0/"
+  }
+}

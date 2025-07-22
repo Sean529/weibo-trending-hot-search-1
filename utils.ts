@@ -39,15 +39,15 @@ export function appendWordsWithDedup(
 ): Word[] {
   // 创建已存在条目的Set，用于快速查找
   const existingSet = new Set(
-    existingWords.map(word => `${word.title}||${word.url}`)
+    existingWords.map((word) => `${word.title}||${word.url}`),
   );
-  
+
   // 过滤掉重复的新条目
-  const uniqueNewWords = newWords.filter(word => {
+  const uniqueNewWords = newWords.filter((word) => {
     const key = `${word.title}||${word.url}`;
     return !existingSet.has(key);
   });
-  
+
   return [...existingWords, ...uniqueNewWords];
 }
 

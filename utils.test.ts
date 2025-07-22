@@ -1,13 +1,8 @@
-#!/usr/bin/env -S deno run --unstable --allow-net --allow-read --allow-write --import-map=import_map.json
+#!/usr/bin/env -S deno run --unstable --allow-net --allow-read --allow-write --allow-env
 import { assertEquals, assertStringIncludes } from "std/testing/asserts.ts";
 import type { Word } from "./types.ts";
 
-import {
-  createArchive,
-  createList,
-  createReadme,
-  mergeWords,
-} from "./utils.ts";
+import { createArchive, createList, createReadme, mergeWords } from "./utils.ts";
 
 Deno.test("mergeWords", function (): void {
   const words1: Word[] = [];

@@ -1,20 +1,19 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with
-code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
 
-This is an automated Weibo trending topics tracker that scrapes trending search
-data hourly and maintains historical archives. The project tracks Chinese social
-media trends from Weibo (微博) starting from 2020-11-24.
+This is an automated Weibo trending topics tracker that scrapes trending search data hourly and maintains historical
+archives. The project tracks Chinese social media trends from Weibo (微博) starting from 2020-11-24.
 
 ## Technology Stack
 
 - **Runtime**: Deno (TypeScript/JavaScript)
 - **Language**: TypeScript
 - **Dependencies**: Deno standard library only
-- **Automation**: GitHub Actions for CI/CD and scheduled tasks
+- **Automation**: Deno Deploy Cron Jobs for scheduled tasks
+- **Deployment**: Deno Deploy
 
 ## Development Commands
 
@@ -34,8 +33,7 @@ deno run --allow-net --allow-read --allow-write main.ts
 ### Core Files
 
 - `main.ts` - Main scraping script that fetches from Weibo API
-- `utils.ts` - Data processing utilities (mergeWords, createArchive,
-  createReadme)
+- `utils.ts` - Data processing utilities (mergeWords, createArchive, createReadme)
 - `types.ts` - TypeScript interfaces (Word type definition)
 - `utils.test.ts` - Test suite
 
@@ -53,13 +51,14 @@ deno run --allow-net --allow-read --allow-write main.ts
 
 - `/raw/` - Raw JSON data files by date
 - `/archives/` - Daily markdown archives
-- `/.github/workflows/` - CI (`ci.yml`) and hourly scheduling (`schedule.yml`)
+- `deploy.ts` - Deno Deploy web interface
+- `deploy-cron.ts` - Deno Deploy cron job entry point
 
 ## Key Implementation Details
 
 - **Timezone**: Uses Asia/Shanghai for consistent date handling
 - **Authentication**: Requires Weibo cookie in headers for API access
-- **Data Accumulation**: 
+- **Data Accumulation**:
   - **Append Mode** (`WEIBO_APPEND_MODE=true`): Appends all hourly updates with deduplication by title+URL
   - **Merge Mode** (default): Smart merging prevents duplicate trending topics by title only
 - **Error Handling**: Exits with -1 on failed HTTP requests
@@ -67,13 +66,12 @@ deno run --allow-net --allow-read --allow-write main.ts
 
 ## Automation
 
-- **Hourly Schedule**: GitHub Actions runs every hour (`0 * * * *`)
-- **Auto-commit**: Bot commits with "update by github action" message
-- **Cross-platform CI**: Tests on macOS, Ubuntu, Windows
-- **Code Quality**: Deno fmt with 120 character line width
+- **Hourly Schedule**: Deno Deploy Cron Jobs run every hour (`0 * * * *`)
+- **Auto-commit**: Bot commits with timestamp message via GitHub API
+- **Environment**: Runs on Deno Deploy's global edge network
+- **Monitoring**: Available through Deno Deploy dashboard logs
 
 ## Testing
 
-Tests focus on utility functions for data processing and file generation. All
-tests require network, read, and write permissions due to the nature of the
-scraping operations.
+Tests focus on utility functions for data processing and file generation. All tests require network, read, and write
+permissions due to the nature of the scraping operations.

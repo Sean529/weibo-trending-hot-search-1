@@ -1,5 +1,4 @@
-#!/usr/bin/env -S deno run --unstable --allow-net --allow-read --allow-write --import-map=import_map.json
-// Copyright 2020 justjavac(迷渡). All rights reserved. MIT license.
+#!/usr/bin/env -S deno run --unstable --allow-net --allow-read --allow-write --allow-env --unstable-cron
 import { format } from "std/datetime/mod.ts";
 
 import type { Word } from "./types.ts";
@@ -41,17 +40,19 @@ export async function scrapeTrendingTopics() {
   const wordsAlreadyDownload = await loadFromStorage(yyyyMMdd);
 
   // 检查环境变量决定使用追加模式还是合并模式
-  const useAppendMode = Deno.env.get("WEIBO_APPEND_MODE") === "true";
-  
+  // 在 Deno Deploy 中默认使用追加模式
+  const useAppendMode = Deno.env.get("WEIBO_APPEND_MODE") === "true" ||
+    Deno.env.get("DENO_DEPLOYMENT_ID") !== undefined;
+
   // 合并数据
-  const finalWords = useAppendMode 
-    ? appendWordsWithDedup(wordsAlreadyDownload, words)  // 追加模式：保留所有条目但去重
-    : mergeWords(words, wordsAlreadyDownload);   // 合并模式：去重相同标题
+  const finalWords = useAppendMode
+    ? appendWordsWithDedup(wordsAlreadyDownload, words) // 追加模式：保留所有条目但去重
+    : mergeWords(words, wordsAlreadyDownload); // 合并模式：去重相同标题
 
   // 保存到存储
   await saveToStorage(yyyyMMdd, finalWords);
 
-  console.log(`成功更新 ${finalWords.length} 条热搜数据 (${useAppendMode ? '追加模式' : '合并模式'})`);
+  console.log(`成功更新 ${finalWords.length} 条热搜数据 (${useAppendMode ? "追加模式" : "合并模式"})`);
 }
 
 // Deno Deploy 定时任务
