@@ -48,8 +48,16 @@ async function renderHtmlPage(
       // Deno Deploy 环境：从 GitHub 获取模板
       const repoOwner = Deno.env.get("GITHUB_REPO_OWNER") || "Sean529";
       const repoName = Deno.env.get("GITHUB_REPO_NAME") || "weibo-trending-hot-search-1";
+      const githubToken = Deno.env.get("GITHUB_TOKEN");
+      
+      const headers: HeadersInit = {};
+      if (githubToken) {
+        headers["Authorization"] = `Bearer ${githubToken}`;
+      }
+      
       const templateContent = await fetch(
         `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/template.html`,
+        { headers }
       );
       if (!templateContent.ok) {
         throw new Error(`Failed to fetch template: ${templateContent.status}`);
