@@ -3,7 +3,16 @@
 import { scrapeTrendingTopics } from "./main.ts";
 
 // Deno Deploy 定时任务
-Deno.cron("Weibo Trending Scraper", "0 * * * *", scrapeTrendingTopics);
+try {
+  Deno.cron("Weibo Trending Scraper", "0 * * * *", scrapeTrendingTopics);
+} catch (error) {
+  // If cron already exists, that's fine - just log and continue
+  if (error instanceof TypeError && error.message.includes("already exists")) {
+    console.log("⚠️ Cron job already exists, skipping creation");
+  } else {
+    throw error;
+  }
+}
 
 // HTTP 服务器 (用于健康检查)
 Deno.serve(async (req: Request) => {
