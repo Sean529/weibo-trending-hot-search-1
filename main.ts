@@ -1,6 +1,6 @@
 #!/usr/bin/env -S deno run --allow-net --allow-read --allow-write --allow-env --unstable-cron
 // 统一入口文件 - Deno Deploy
-import { scrapeTrendingTopics } from "./main.ts";
+import { scrapeTrendingTopics } from "./scraper.ts";
 import { loadFromStorage } from "./storage.ts";
 import { format } from "std/datetime/mod.ts";
 import type { Word } from "./types.ts";
