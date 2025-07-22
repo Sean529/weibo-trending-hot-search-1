@@ -15,7 +15,7 @@
 ## 今日热门搜索
 
 <!-- BEGIN -->
-<!-- 最后更新时间 Tue Jul 22 2025 22:00:28 GMT+0000 (Coordinated Universal Time) -->
+<!-- 最后更新时间 Tue Jul 22 2025 22:00:33 GMT+0000 (Coordinated Universal Time) -->
 1. [改革为人民](https://s.weibo.com//weibo?q=%23%E6%94%B9%E9%9D%A9%E4%B8%BA%E4%BA%BA%E6%B0%91%23&Refer=new_time)
 1. [微信能自动发消息了](https://s.weibo.com//weibo?q=%23%E5%BE%AE%E4%BF%A1%E8%83%BD%E8%87%AA%E5%8A%A8%E5%8F%91%E6%B6%88%E6%81%AF%E4%BA%86%23&t=31&band_rank=2&Refer=top)
 1. [应届生拒绝offer被HR威胁业内封杀](https://s.weibo.com//weibo?q=%23%E5%BA%94%E5%B1%8A%E7%94%9F%E6%8B%92%E7%BB%9Doffer%E8%A2%ABHR%E5%A8%81%E8%83%81%E4%B8%9A%E5%86%85%E5%B0%81%E6%9D%80%23&t=31&band_rank=2&Refer=top)
