@@ -1,6 +1,6 @@
 #!/usr/bin/env -S deno run --allow-net --allow-read --allow-write --allow-env --unstable-cron
 // Deno Deploy 专用入口文件
-import { scrapeTrendingTopics } from "./main.ts";
+import { scrapeTrendingTopics } from "./scraper.ts";
 
 // Deno Deploy 定时任务
 try {

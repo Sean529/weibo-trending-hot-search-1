@@ -1,5 +1,5 @@
 // Deno Deploy 入口文件
-import { scrapeTrendingTopics } from "./main.ts";
+import { scrapeTrendingTopics } from "./scraper.ts";
 import { loadFromStorage } from "./storage.ts";
 import { format } from "std/datetime/mod.ts";
 import type { Word } from "./types.ts";
