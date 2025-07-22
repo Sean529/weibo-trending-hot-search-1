@@ -1,16 +1,16 @@
 # weibo-trending-hot-search
 
 [![Deno Deploy](https://img.shields.io/badge/Deployed%20on-Deno%20Deploy-blue?logo=deno)](https://dash.deno.com)
-[![license](https://img.shields.io/github/license/justjavac/weibo-trending-hot-search)](https://github.com/justjavac/weibo-trending-hot-search/blob/master/LICENSE)
+[![license](https://img.shields.io/github/license/Sean529/weibo-trending-hot-search)](https://github.com/Sean529/weibo-trending-hot-search/blob/master/LICENSE)
 
 微博热搜榜，记录从 2025-07-22 日开始的微博热门搜索。每小时通过 Deno Deploy
 定时任务抓取一次数据，按天[归档](./archives)。
 
 ## 相关项目
 
-- [知乎热搜榜](https://github.com/justjavac/zhihu-trending-top-search)
-- [知乎热门话题](https://github.com/justjavac/zhihu-trending-hot-questions)
-- [知乎热门视频](https://github.com/justjavac/zhihu-trending-hot-video)
+- [知乎热搜榜](https://github.com/Sean529/zhihu-trending-top-search)
+- [知乎热门话题](https://github.com/Sean529/zhihu-trending-hot-questions)
+- [知乎热门视频](https://github.com/Sean529/zhihu-trending-hot-video)
 
 ## 今日热门搜索
 

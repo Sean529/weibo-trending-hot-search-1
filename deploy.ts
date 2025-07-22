@@ -45,7 +45,7 @@ async function renderHtmlPage(
 
     if (Deno.env.get("DENO_DEPLOYMENT_ID")) {
       // Deno Deploy 环境：从 GitHub 获取模板
-      const repoOwner = Deno.env.get("GITHUB_REPO_OWNER") || "justjavac";
+      const repoOwner = Deno.env.get("GITHUB_REPO_OWNER") || "Sean529";
       const repoName = Deno.env.get("GITHUB_REPO_NAME") || "weibo-trending-hot-search";
       const templateContent = await fetch(
         `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/template.html`,

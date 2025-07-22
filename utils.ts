@@ -3,7 +3,7 @@ import type { Word } from "./types.ts";
 /**
  * 合并两次热门话题并根据**内容**去重，新的覆盖旧的
  *
- * via https://github.com/justjavac/weibo-trending-hot-search/issues/11#issuecomment-1428187183
+ * via https://github.com/Sean529/weibo-trending-hot-search-1/issues/11#issuecomment-1428187183
  */
 export function mergeWords(
   words: Word[],

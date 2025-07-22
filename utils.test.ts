@@ -68,6 +68,6 @@ Deno.test("createReadme", async function (): Promise<void> {
   assertStringIncludes(await createReadme(words), "微博");
   assertStringIncludes(
     await createReadme(words),
-    "weibo-trending-hot-search",
+    "weibo-trending-hot-search-1",
   );
 });

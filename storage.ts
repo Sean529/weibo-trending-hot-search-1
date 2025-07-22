@@ -3,9 +3,9 @@ import { createArchive, createReadme } from "./utils.ts";
 
 // GitHub API 配置
 const GITHUB_API_BASE = "https://api.github.com";
-const REPO_OWNER = Deno.env.get("GITHUB_REPO_OWNER") || "justjavac";
+const REPO_OWNER = Deno.env.get("GITHUB_REPO_OWNER") || "Sean529";
 const REPO_NAME = Deno.env.get("GITHUB_REPO_NAME") ||
-  "weibo-trending-hot-search";
+  "weibo-trending-hot-search-1";
 const GITHUB_TOKEN = Deno.env.get("GITHUB_TOKEN");
 
 // 检查是否运行在 Deno Deploy 环境
