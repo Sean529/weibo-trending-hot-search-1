@@ -53,8 +53,8 @@ async function getFileFromGitHub(path: string): Promise<string | null> {
       return decoder.decode(bytes);
     }
     return null;
-  } catch (_error) {
-    if (_error.message.includes("404")) {
+  } catch (_error: any) {
+    if (_error?.message?.includes("404")) {
       return null; // 文件不存在
     }
     throw _error;
@@ -102,8 +102,8 @@ async function saveFileToGitHub(
 
       // 成功则退出循环
       break;
-    } catch (error) {
-      if (error.message.includes("409") && retries > 1) {
+    } catch (error: any) {
+      if (error?.message?.includes("409") && retries > 1) {
         // 如果是冲突错误且还有重试次数，等待一会儿再试
         console.log(
           `File conflict, retrying... (${retries - 1} attempts left)`,
