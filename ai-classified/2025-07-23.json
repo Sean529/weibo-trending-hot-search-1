@@ -1,10 +1,10 @@
 {
   "date": "2025-07-23",
   "timestamp": "2025-07-23T03:31:30.318Z",
-  "totalProcessed": 6,
+  "totalProcessed": 26,
   "categories": {
     "社会新闻": {
-      "count": 6,
+      "count": 26,
       "items": [
         {
           "url": "/weibo?q=%23%E7%B4%A0%E4%BA%BA%E5%8F%98%E8%89%BA%E4%BA%BA%E9%9C%80%E6%85%8E%E4%B9%8B%E5%8F%88%E6%85%8E%23&t=31&band_rank=19&Refer=top",
@@ -41,6 +41,126 @@
           "title": "日媒称首相石破茂将辞职",
           "aiCategory": "社会新闻",
           "processedAt": "2025-07-23T03:31:57.184Z"
+        },
+        {
+          "url": "/weibo?q=%E5%BE%AE%E4%BF%A1%20%E5%90%8E%E6%82%94%E8%8D%AF&t=31&band_rank=1&Refer=top",
+          "title": "微信 后悔药",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:00:02.789Z"
+        },
+        {
+          "url": "/weibo?q=%23%E4%B9%94%E4%BB%BB%E6%A2%81%E5%87%BA%E9%81%9318%E5%91%A8%E5%B9%B4%E7%88%B6%E4%BA%B2%E8%BA%AB%E7%A9%BF%E7%B2%89%E8%89%B2%E6%89%AB%E5%A2%93%23&t=31&band_rank=13&Refer=top",
+          "title": "乔任梁出道18周年父亲身穿粉色扫墓",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:00:14.979Z"
+        },
+        {
+          "url": "/weibo?q=%23%E6%88%91%E5%9B%BD%E5%B9%B3%E5%9D%87%E6%AF%8F%E4%BA%BA%E6%AF%8F%E5%B9%B4%E5%90%83%E8%BF%91100%E6%96%A4%E8%A5%BF%E7%93%9C%23&t=31&band_rank=18&Refer=top",
+          "title": "我国平均每人每年吃近100斤西瓜",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:00:19.922Z"
+        },
+        {
+          "url": "/weibo?q=%2320%E5%B2%81%E5%A5%B3%E6%A8%A1%E6%8B%92%E7%BB%9D%E5%8F%91%E7%94%9F%E5%85%B3%E7%B3%BB%E8%A2%AB%E4%BB%8E%E9%AB%98%E5%A4%84%E6%89%94%E4%B8%8B%23&t=31&band_rank=21&Refer=top",
+          "title": "20岁女模拒绝发生关系被从高处扔下",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:00:23.956Z"
+        },
+        {
+          "url": "/weibo?q=%23%E6%88%91%E5%B0%B1%E8%AF%B4%E4%B8%80%E4%B8%AA%E6%8A%B1%E6%8A%B1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E9%9D%9E%E7%A4%BC%E5%8B%BF%E8%A7%86%E7%9A%84%23&t=31&band_rank=28&Refer=top",
+          "title": "我就说一个抱抱有什么好非礼勿视的",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:00:33.310Z"
+        },
+        {
+          "url": "/weibo?q=%2312306%E5%9B%9E%E5%BA%94%E9%AB%98%E9%93%81%E5%95%86%E5%8A%A1%E5%BA%A7%E5%8D%AB%E7%94%9F%E8%84%8F%E4%B9%B1%23&t=31&band_rank=30&Refer=top",
+          "title": "12306回应高铁商务座卫生脏乱",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:00:36.068Z"
+        },
+        {
+          "url": "/weibo?q=%23%E5%AE%B6%E5%B1%9E%E7%A7%B04%E5%B2%81%E4%BE%84%E5%AD%90%E5%85%A8%E9%BA%BB%E6%8B%94%E4%B9%B3%E7%89%99%E8%BA%AB%E4%BA%A1%23&t=31&band_rank=36&Refer=top",
+          "title": "家属称4岁侄子全麻拔乳牙身亡",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:00:42.544Z"
+        },
+        {
+          "url": "/weibo?q=%232%E9%AB%98%E4%B8%AD%E7%94%9F%E9%AA%91%E7%94%B5%E5%8A%A8%E4%B8%A4%E8%BD%AE%E8%BD%A6%E6%92%9E%E5%9B%B4%E5%A2%99%E8%BA%AB%E4%BA%A1%23&t=31&band_rank=38&Refer=top",
+          "title": "2高中生骑电动两轮车撞围墙身亡",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:00:45.383Z"
+        },
+        {
+          "url": "/weibo?q=%23%E4%B8%AD%E5%9B%BD%E7%BD%91%E7%BA%A6%E8%BD%A6%E5%88%86%E4%BC%9A%E8%87%B4%E6%AD%89%23&t=31&band_rank=44&Refer=top",
+          "title": "中国网约车分会致歉",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:00:52.441Z"
+        },
+        {
+          "url": "/weibo?q=%E9%9F%A9%E5%9B%BD%E6%89%93%E5%B7%A5%E4%BA%BA4500%E9%9F%A9%E5%85%83%E9%A4%90%E6%A0%87%E7%9A%84%E5%8D%88%E9%A4%90&t=31&band_rank=45&Refer=top",
+          "title": "韩国打工人4500韩元餐标的午餐",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:00:53.581Z"
+        },
+        {
+          "url": "/weibo?q=%23%E4%B8%83%E4%B8%83%E7%AB%99%E5%8F%B0%E6%8E%A5%E5%95%86%E6%BC%94%E4%B8%A4%E5%B0%8F%E6%97%B6%E9%85%AC%E5%8A%B38000%23&t=31&band_rank=49&Refer=top",
+          "title": "七七站台接商演两小时酬劳8000",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:00:58.335Z"
+        },
+        {
+          "url": "/weibo?q=%23%E4%B8%89%E4%BC%8F%E5%A4%A9%E7%85%AE%E8%BF%99%E7%A7%8D%E6%B0%B4%E8%A1%A5%E9%98%B3%E7%A5%9B%E6%B9%BF%23&t=31&band_rank=3&Refer=top",
+          "title": "三伏天煮这种水补阳祛湿",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:51:05.727Z"
+        },
+        {
+          "url": "/weibo?q=%23%E5%B0%81%E5%85%B3%E5%90%8E%E5%8E%BB%E6%B5%B7%E5%8D%97%E6%97%A0%E9%9C%80%E9%A2%9D%E5%A4%96%E5%8A%9E%E8%AF%81%E4%BB%B6%23&t=31&band_rank=10&Refer=top",
+          "title": "封关后去海南无需额外办证件",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:51:08.702Z"
+        },
+        {
+          "url": "/weibo?q=%23%E5%8E%9F%E6%9D%A5%E9%95%BF%E8%83%9655%E6%96%A4%E7%9A%84%E9%9D%A2%E7%9B%B8%E5%8F%98%E5%8C%96%E8%BF%99%E4%B9%88%E5%A4%A7%23&t=31&band_rank=11&Refer=top",
+          "title": "原来长胖55斤的面相变化这么大",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:51:09.458Z"
+        },
+        {
+          "url": "/weibo?q=%23%E5%BD%93985%E5%A4%A7%E5%AD%A6%E6%95%99%E6%8E%88%E6%B2%89%E8%BF%B7%E7%9F%AD%E5%89%A7%23&t=31&band_rank=18&Refer=top",
+          "title": "当985大学教授沉迷短剧",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:51:11.129Z"
+        },
+        {
+          "url": "/weibo?q=%23%E5%9F%BA%E5%AD%94%E8%82%AF%E9%9B%85%E7%83%AD%E7%96%AB%E6%83%85%E6%98%93%E9%80%A0%E6%88%90%E8%B7%A8%E7%9C%81%E4%BC%A0%E6%92%AD%23&t=31&band_rank=20&Refer=top",
+          "title": "基孔肯雅热疫情易造成跨省传播",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:51:12.684Z"
+        },
+        {
+          "url": "/weibo?q=%23%E4%BA%8E%E6%AD%A3%E6%8B%92%E7%AD%BE%E7%88%86%E7%81%AB%E4%B8%83%E4%B8%83%E4%B8%BA%E4%BD%95%E7%82%B8%E9%94%85%23&t=31&band_rank=23&Refer=top",
+          "title": "于正拒签爆火七七为何炸锅",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:51:13.532Z"
+        },
+        {
+          "url": "/weibo?q=%23%E8%B5%9B%E9%87%8C%E6%9C%A8%E6%B9%96%E6%99%AF%E5%8C%BA%E5%AF%B9%E5%85%AC%E5%8E%95%E9%97%AE%E9%A2%98%E9%81%93%E6%AD%89%23&t=31&band_rank=30&Refer=top",
+          "title": "赛里木湖景区对公厕问题道歉",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:51:17.576Z"
+        },
+        {
+          "url": "/weibo?q=%23%E5%AD%99%E8%8F%B2%E8%8F%B2%E6%9B%9D%E5%BC%A0%E6%B1%89%E6%9D%B0%E9%9C%B8%E5%87%8C%E5%86%85%E5%B9%95%23&t=31&band_rank=42&Refer=top",
+          "title": "孙菲菲曝张汉杰霸凌内幕",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:51:23.845Z"
+        },
+        {
+          "url": "/weibo?q=%2313%E5%B2%81%E7%AD%89%E7%AD%89%E8%BA%AB%E9%AB%98%E8%B6%85%E8%BF%87%E5%AD%99%E4%BF%AA%23&t=31&band_rank=50&Refer=top",
+          "title": "13岁等等身高超过孙俪",
+          "aiCategory": "社会新闻",
+          "processedAt": "2025-07-23T04:51:27.341Z"
         }
       ]
     },
@@ -62,14 +182,67 @@
     }
   },
   "processedButUnclassified": {
-    "count": 0,
-    "titles": []
+    "count": 52,
+    "titles": [
+      "总书记这些话语直抵人心",
+      "微信 对讲机",
+      "遥感卫星发现商周之际最大城址",
+      "海南自由贸易港封关12月18日启动",
+      "凡人修仙传定档",
+      "国新办介绍海南自由贸易港建设情况",
+      "TMEA阵容",
+      "山姆App重新上架卫龙魔芋爽",
+      "王楚钦分享面对压力自己心路历程",
+      "特朗普称与日本达成一项巨大协议",
+      "蔚来乐道L90全国试驾抢先开启",
+      "朝雪录吻戏被删",
+      "57岁金星巴黎被偶遇",
+      "Pura80数字版开启预售",
+      "上证指数逼近3600点",
+      "敖瑞鹏说入圈后幸福感降低",
+      "海南",
+      "40岁宝妈练背一年换了张脸",
+      "一天省5块相当于银行存了十几万",
+      "僵尸校园2剧本围读",
+      "腾讯内部新规",
+      "特朗普称期待在不久的将来访问中国",
+      "特朗普称对菲律宾收19%关税",
+      "世界之外",
+      "披荆斩棘二公录制",
+      "蔡依林新专辑pleasure",
+      "朴彩英跳错",
+      "世卫专家就基孔肯雅热发警报",
+      "关晓彤投喂彩椒碗",
+      "明末渊虚之羽媒体评测解禁",
+      "朝雪录每一个角色都有高光",
+      "若有战召必回首提者原来是他",
+      "徐艺洋古风美人",
+      "暴食 皮质醇高",
+      "总书记的大国城思",
+      "莲花楼",
+      "旅游三千块钱定律",
+      "用智搜分析看懂歌手2025",
+      "爱蹲的人有好运气",
+      "咖啡 护肝",
+      "杨幂演技",
+      "王楚钦说基本屏蔽了所有社交软件",
+      "高瀚宇跳likejennie",
+      "杨瀚森无缘夏联最佳阵容",
+      "你好 我是练习生汪硕",
+      "螺蛳粉定律",
+      "微信实时对讲功能已下线",
+      "Shanks谈Faker和Chovy谁厉害",
+      "TIMA音乐大赏阵容",
+      "宁艺卓费加罗七月刊封面",
+      "伊能静三伏天瘦身法",
+      "彩椒碗"
+    ]
   },
   "metadata": {
-    "lastUpdated": "2025-07-23T03:49:38.546Z",
+    "lastUpdated": "2025-07-23T04:51:27.348Z",
     "processingStats": {
-      "totalChecked": 6,
-      "newlyProcessed": 6,
+      "totalChecked": 78,
+      "newlyProcessed": 26,
       "skippedDuplicates": 0
     }
   }

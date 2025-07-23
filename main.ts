@@ -243,7 +243,7 @@ async function handler(request: Request): Promise<Response> {
       }
 
       // 优先使用AI分类数据，fallback到基础筛选
-      if (category) {
+      if (category && category !== 'all') {
         try {
           // 尝试从AI分类数据获取
           filteredWords = await getCategoryData(today, category);
@@ -254,6 +254,7 @@ async function handler(request: Request): Promise<Response> {
           filteredWords = filterWordsByCategory(todayWords, category);
         }
       } else {
+        // category为null、undefined或'all'时，返回全部数据
         filteredWords = todayWords;
       }
 

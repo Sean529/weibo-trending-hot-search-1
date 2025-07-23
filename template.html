@@ -1,365 +1,406 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>微博热搜榜 - {{TODAY}}</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>微博热搜榜 - {{TODAY}}</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      font-weight: 300;
+    }
+
+    .header .date {
+      font-size: 1.2em;
+      opacity: 0.9;
+    }
+
+    .header .update-time {
+      font-size: 0.9em;
+      opacity: 0.8;
+      margin-top: 10px;
+    }
+
+    .stats {
+      background: #f8f9fa;
+      padding: 15px 30px;
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .content {
+      padding: 0;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .trending-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid #f0f0f0;
+      transition: background-color 0.2s ease;
+    }
+
+    .trending-item:hover {
+      background-color: #f8f9fa;
+    }
+
+    .trending-item:last-child {
+      border-bottom: none;
+    }
+
+    .rank {
+      font-size: 18px;
+      font-weight: bold;
+      color: #666;
+      width: 40px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .rank.top3 {
+      color: #ff6b6b;
+    }
+
+    .rank.top10 {
+      color: #ff9f43;
+    }
+
+    .title {
+      flex: 1;
+      margin: 0 16px;
+      font-size: 16px;
+      line-height: 1.4;
+      color: #333;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .title:hover {
+      color: #ff6b6b;
+    }
+
+    .copy-btn {
+      background: #ff6b6b;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .copy-btn:hover {
+      background: #ee5a24;
+      transform: translateY(-1px);
+    }
+
+    .copy-btn:active {
+      transform: translateY(0);
+    }
+
+    .copy-btn.copied {
+      background: #2ecc71;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #666;
+    }
+
+    .empty-state .icon {
+      font-size: 3em;
+      margin-bottom: 20px;
+      opacity: 0.5;
+    }
+
+    .footer {
+      background: #f8f9fa;
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .footer a {
+      color: #ff6b6b;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #2ecc71;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 6px;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .notification.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    @media (max-width: 600px) {
       body {
-        font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        padding: 20px;
-      }
-
-      .container {
-        max-width: 800px;
-        margin: 0 auto;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        overflow: hidden;
-      }
-
-      .header {
-        background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-        color: white;
-        padding: 30px;
-        text-align: center;
+        padding: 10px;
       }
 
       .header h1 {
-        font-size: 2.5em;
-        margin-bottom: 10px;
-        font-weight: 300;
-      }
-
-      .header .date {
-        font-size: 1.2em;
-        opacity: 0.9;
-      }
-
-      .header .update-time {
-        font-size: 0.9em;
-        opacity: 0.8;
-        margin-top: 10px;
-      }
-
-      .stats {
-        background: #f8f9fa;
-        padding: 15px 30px;
-        text-align: center;
-        color: #666;
-        font-size: 14px;
-      }
-
-      .content {
-        padding: 0;
-        max-height: 600px;
-        overflow-y: auto;
+        font-size: 2em;
       }
 
       .trending-item {
-        display: flex;
-        align-items: center;
-        padding: 16px 24px;
-        border-bottom: 1px solid #f0f0f0;
-        transition: background-color 0.2s ease;
-      }
-
-      .trending-item:hover {
-        background-color: #f8f9fa;
-      }
-
-      .trending-item:last-child {
-        border-bottom: none;
-      }
-
-      .rank {
-        font-size: 18px;
-        font-weight: bold;
-        color: #666;
-        width: 40px;
-        text-align: center;
-        flex-shrink: 0;
-      }
-
-      .rank.top3 {
-        color: #ff6b6b;
-      }
-
-      .rank.top10 {
-        color: #ff9f43;
+        padding: 12px 16px;
       }
 
       .title {
-        flex: 1;
-        margin: 0 16px;
-        font-size: 16px;
-        line-height: 1.4;
-        color: #333;
-        cursor: pointer;
-        transition: color 0.2s ease;
-      }
-
-      .title:hover {
-        color: #ff6b6b;
+        font-size: 15px;
+        margin: 0 12px;
       }
 
       .copy-btn {
-        background: #ff6b6b;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        padding: 8px 16px;
-        cursor: pointer;
-        font-size: 14px;
-        transition: all 0.2s ease;
-        flex-shrink: 0;
+        padding: 6px 12px;
+        font-size: 13px;
       }
+    }
+  </style>
+</head>
 
-      .copy-btn:hover {
-        background: #ee5a24;
-        transform: translateY(-1px);
-      }
-
-      .copy-btn:active {
-        transform: translateY(0);
-      }
-
-      .copy-btn.copied {
-        background: #2ecc71;
-      }
-
-      .empty-state {
-        text-align: center;
-        padding: 60px 20px;
-        color: #666;
-      }
-
-      .empty-state .icon {
-        font-size: 3em;
-        margin-bottom: 20px;
-        opacity: 0.5;
-      }
-
-      .footer {
-        background: #f8f9fa;
-        padding: 20px;
-        text-align: center;
-        font-size: 14px;
-        color: #666;
-        border-top: 1px solid #e9ecef;
-      }
-
-      .footer a {
-        color: #ff6b6b;
-        text-decoration: none;
-      }
-
-      .footer a:hover {
-        text-decoration: underline;
-      }
-
-      .notification {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: #2ecc71;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 6px;
-        opacity: 0;
-        transform: translateX(100%);
-        transition: all 0.3s ease;
-        z-index: 1000;
-      }
-
-      .notification.show {
-        opacity: 1;
-        transform: translateX(0);
-      }
-
-      @media (max-width: 600px) {
-        body {
-          padding: 10px;
-        }
-
-        .header h1 {
-          font-size: 2em;
-        }
-
-        .trending-item {
-          padding: 12px 16px;
-        }
-
-        .title {
-          font-size: 15px;
-          margin: 0 12px;
-        }
-
-        .copy-btn {
-          padding: 6px 12px;
-          font-size: 13px;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="container">
-      <div class="header">
-        <h1>🔥 微博热搜榜</h1>
-        <div class="date">{{TODAY}}</div>
-        <div class="update-time">数据更新时间: {{UPDATE_TIME}}</div>
-      </div>
-
-      <div class="stats">
-        共 {{DATA_COUNT}} 条热搜 | 点击标题打开微博 | 点击复制按钮复制标题
-      </div>
-      <!-- 筛选 UI 开始 -->
-      <div class="filter-bar" style="padding: 12px 30px; text-align: right; background: #f8f9fa; border-bottom: 1px solid #f0f0f0;">
-        <label for="type-filter" style="font-size: 14px; color: #666; margin-right: 8px;">筛选类型:</label>
-        <select id="type-filter" style="padding: 6px 12px; border-radius: 4px; border: 1px solid #ddd; font-size: 14px;">
-          <option value="all">全部</option>
-          <option value="社会新闻">社会新闻</option>
-        </select>
-      </div>
-      <!-- 筛选 UI 结束 -->
-      <div class="content">
-        {{TRENDING_ITEMS}}
-      </div>
-
-      <div class="footer">
-        <p>
-          微博热搜数据自动抓取 | <a
-            href="#"
-            onclick="return triggerUpdate(event)"
-          >手动更新</a> | <a href="/health">服务状态</a>
-        </p>
-      </div>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🔥 微博热搜榜</h1>
+      <div class="date">{{TODAY}}</div>
+      <div class="update-time">数据更新时间: {{UPDATE_TIME}}</div>
     </div>
 
-    <div class="notification" id="notification"></div>
+    <div class="stats">
+      共 {{DATA_COUNT}} 条热搜 | 点击标题打开微博 | 点击复制按钮复制标题
+    </div>
+    <!-- 筛选 UI 开始 -->
+    <div class="filter-bar"
+      style="padding: 12px 30px; text-align: right; background: #f8f9fa; border-bottom: 1px solid #f0f0f0;">
+      <label for="type-filter" style="font-size: 14px; color: #666; margin-right: 8px;">筛选类型:</label>
+      <select id="type-filter" style="padding: 6px 12px; border-radius: 4px; border: 1px solid #ddd; font-size: 14px;">
+        <option value="all">全部</option>
+        <option value="社会新闻" selected>社会新闻</option>
+      </select>
+    </div>
+    <!-- 筛选 UI 结束 -->
+    <div class="content">
+      {{TRENDING_ITEMS}}
+    </div>
 
-    <script>
-      function copyTitle(title, button) {
-        navigator.clipboard.writeText(title).then(() => {
-          const originalText = button.textContent;
-          button.textContent = "已复制";
-          button.classList.add("copied");
+    <div class="footer">
+      <p>
+        微博热搜数据自动抓取 | <a href="#" onclick="return triggerUpdate(event)">手动更新</a>
+      </p>
+    </div>
+  </div>
 
-          showNotification("已复制: " + title);
+  <div class="notification" id="notification"></div>
 
-          setTimeout(() => {
-            button.textContent = originalText;
-            button.classList.remove("copied");
-          }, 2000);
-        }).catch((err) => {
-          console.error("复制失败:", err);
-          // 降级方案
-          fallbackCopyTextToClipboard(title);
-          showNotification("已复制: " + title);
+  <script>
+    function copyTitle(title, button) {
+      navigator.clipboard.writeText(title).then(() => {
+        const originalText = button.textContent;
+        button.textContent = "已复制";
+        button.classList.add("copied");
 
-          const originalText = button.textContent;
-          button.textContent = "已复制";
-          button.classList.add("copied");
-
-          setTimeout(() => {
-            button.textContent = originalText;
-            button.classList.remove("copied");
-          }, 2000);
-        });
-      }
-
-      function fallbackCopyTextToClipboard(text) {
-        const textArea = document.createElement("textarea");
-        textArea.value = text;
-        textArea.style.position = "fixed";
-        textArea.style.left = "-999999px";
-        textArea.style.top = "-999999px";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-
-        try {
-          document.execCommand("copy");
-        } catch (err) {
-          console.error("降级复制也失败了:", err);
-        }
-
-        document.body.removeChild(textArea);
-      }
-
-      function openWeibo(url) {
-        window.open("https://s.weibo.com" + url, "_blank");
-      }
-
-      function showNotification(message) {
-        const notification = document.getElementById("notification");
-        notification.textContent = message;
-        notification.classList.add("show");
+        showNotification("已复制: " + title);
 
         setTimeout(() => {
-          notification.classList.remove("show");
-        }, 3000);
+          button.textContent = originalText;
+          button.classList.remove("copied");
+        }, 2000);
+      }).catch((err) => {
+        console.error("复制失败:", err);
+        // 降级方案
+        fallbackCopyTextToClipboard(title);
+        showNotification("已复制: " + title);
+
+        const originalText = button.textContent;
+        button.textContent = "已复制";
+        button.classList.add("copied");
+
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.classList.remove("copied");
+        }, 2000);
+      });
+    }
+
+    function fallbackCopyTextToClipboard(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      textArea.style.top = "-999999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        document.execCommand("copy");
+      } catch (err) {
+        console.error("降级复制也失败了:", err);
       }
 
-      function triggerUpdate(event) {
-        event.preventDefault();
+      document.body.removeChild(textArea);
+    }
 
-        showNotification("正在更新数据...");
+    function openWeibo(url) {
+      window.open("https://s.weibo.com" + url, "_blank");
+    }
 
-        fetch("/trigger", { method: "POST" })
-          .then((response) => response.json())
-          .then((data) => {
+    function showNotification(message) {
+      const notification = document.getElementById("notification");
+      notification.textContent = message;
+      notification.classList.add("show");
+
+      setTimeout(() => {
+        notification.classList.remove("show");
+      }, 3000);
+    }
+
+    function triggerUpdate(event) {
+      event.preventDefault();
+
+      showNotification("正在更新数据...");
+
+      fetch("/trigger", { method: "POST" })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            showNotification("数据更新成功，正在刷新页面...");
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          } else {
+            showNotification("更新失败: " + data.error);
+          }
+        })
+        .catch((err) => {
+          console.error("更新失败:", err);
+          showNotification("更新失败，请稍后再试");
+        });
+
+      return false;
+    }
+
+    // AI筛选功能实现
+    document.getElementById('type-filter').addEventListener('change', function (e) {
+      const selectedType = e.target.value;
+
+      if (selectedType === 'all') {
+        // 从API获取全部数据
+        showNotification('正在加载全部热搜...');
+
+        fetch('/api/filtered?category=all')
+          .then(response => response.json())
+          .then(data => {
             if (data.success) {
-              showNotification("数据更新成功，正在刷新页面...");
-              setTimeout(() => {
-                window.location.reload();
-              }, 2000);
+              // 重新渲染热搜列表
+              const content = document.querySelector('.content');
+              const stats = document.querySelector('.stats');
+
+              if (data.data.length === 0) {
+                content.innerHTML = `
+                    <div class="empty-state">
+                      <div class="icon">📭</div>
+                      <p>暂无数据</p>
+                    </div>
+                  `;
+              } else {
+                // 生成新的热搜项目HTML
+                const trendingItems = data.data.map((word, index) => `
+                    <div class="trending-item">
+                      <div class="rank ${index < 3 ? "top3" : index < 10 ? "top10" : ""}">${index + 1}</div>
+                      <div class="title" onclick="openWeibo('${word.url}')" title="点击打开微博">${escapeHtmlClient(word.title)}</div>
+                      <button class="copy-btn" onclick="copyTitle('${escapeHtmlClient(word.title).replace(/'/g, "\\'")}', this)">复制</button>
+                    </div>
+                  `).join('');
+
+                content.innerHTML = trendingItems;
+              }
+
+              // 更新统计信息
+              stats.innerHTML = `
+                  <span>📊 共 ${data.totalCount} 条数据</span>
+                  <span>🎯 显示 ${data.filteredCount} 条</span>
+                  <span>🕒 ${new Date(data.updateTime).toLocaleString('zh-CN')}</span>
+                `;
+
+              showNotification('显示全部热搜');
             } else {
-              showNotification("更新失败: " + data.error);
+              showNotification('加载失败: ' + data.error, 'error');
             }
           })
-          .catch((err) => {
-            console.error("更新失败:", err);
-            showNotification("更新失败，请稍后再试");
+          .catch(error => {
+            console.error('获取数据失败:', error);
+            showNotification('网络错误，请检查连接', 'error');
           });
+      } else {
+        // 从API获取筛选后的数据
+        showNotification(`正在加载${selectedType}...`);
 
-        return false;
-      }
+        fetch(`/api/filtered?category=${encodeURIComponent(selectedType)}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              // 重新渲染热搜列表
+              const content = document.querySelector('.content');
+              const stats = document.querySelector('.stats');
 
-      // AI筛选功能实现
-      document.getElementById('type-filter').addEventListener('change', function(e) {
-        const selectedType = e.target.value;
-        
-        if (selectedType === 'all') {
-          // 显示所有项目
-          document.querySelectorAll('.trending-item').forEach(item => {
-            item.style.display = 'flex';
-          });
-          showNotification('显示全部热搜');
-        } else {
-          // 从API获取筛选后的数据
-          showNotification(`正在加载${selectedType}...`);
-          
-          fetch(`/api/filtered?category=${encodeURIComponent(selectedType)}`)
-            .then(response => response.json())
-            .then(data => {
-              if (data.success) {
-                // 重新渲染热搜列表
-                const content = document.querySelector('.content');
-                const stats = document.querySelector('.stats');
-                
-                if (data.data.length === 0) {
-                  content.innerHTML = `
+              if (data.data.length === 0) {
+                content.innerHTML = `
                     <div class="empty-state">
                       <div class="icon">📭</div>
                       <p>暂无${selectedType}数据</p>
@@ -368,56 +409,68 @@
                       </p>
                     </div>
                   `;
-                } else {
-                  content.innerHTML = generateTrendingItemsFromData(data.data);
-                }
-                
-                // 更新统计信息
-                stats.innerHTML = `
+              } else {
+                content.innerHTML = generateTrendingItemsFromData(data.data);
+              }
+
+              // 更新统计信息
+              stats.innerHTML = `
                   共 ${data.filteredCount} 条${selectedType} (总计 ${data.totalCount} 条热搜) | 点击标题打开微博 | 点击复制按钮复制标题
                 `;
-                
-                showNotification(`已显示 ${data.filteredCount} 条${selectedType}`);
-              } else {
-                showNotification('加载失败: ' + data.error);
-              }
-            })
-            .catch(err => {
-              console.error('筛选失败:', err);
-              showNotification('筛选失败，请稍后再试');
-            });
-        }
-      });
-      
-      // 从API数据生成HTML
-      function generateTrendingItemsFromData(words) {
-        if (words.length === 0) {
-          return `
+
+              showNotification(`已显示 ${data.filteredCount} 条${selectedType}`);
+            } else {
+              showNotification('加载失败: ' + data.error);
+            }
+          })
+          .catch(err => {
+            console.error('筛选失败:', err);
+            showNotification('筛选失败，请稍后再试');
+          });
+      }
+    });
+
+    // 从API数据生成HTML
+    function generateTrendingItemsFromData(words) {
+      if (words.length === 0) {
+        return `
             <div class="empty-state">
               <div class="icon">📭</div>
               <p>暂无数据，请稍后再试</p>
             </div>
           `;
-        }
+      }
 
-        return words.map((word, index) => `
+      return words.map((word, index) => `
           <div class="trending-item">
             <div class="rank ${index < 3 ? "top3" : index < 10 ? "top10" : ""}">${index + 1}</div>
             <div class="title" onclick="openWeibo('${word.url}')" title="点击打开微博">${escapeHtmlClient(word.title)}</div>
             <button class="copy-btn" onclick="copyTitle('${escapeHtmlClient(word.title).replace(/'/g, "\\'")}', this)">复制</button>
           </div>
         `).join("");
+    }
+
+    // 客户端HTML转义
+    function escapeHtmlClient(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // 页面加载完成后自动加载社会新闻
+    document.addEventListener('DOMContentLoaded', function () {
+      // 触发社会新闻筛选
+      const typeFilter = document.getElementById('type-filter');
+      if (typeFilter.value === '社会新闻') {
+        // 模拟选择变化事件
+        const event = new Event('change');
+        typeFilter.dispatchEvent(event);
       }
-      
-      // 客户端HTML转义
-      function escapeHtmlClient(text) {
-        return text
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#039;");
-      }
-    </script>
-  </body>
+    });
+  </script>
+</body>
+
 </html>
