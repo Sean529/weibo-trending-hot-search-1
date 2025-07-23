@@ -1,0 +1,25 @@
+{
+  "api": {
+    "url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
+    "key": "fa6e9815-0123-4767-8180-21cf22c6fa12",
+    "model": "doubao-1-5-lite-32k-250115"
+  },
+  "settings": {
+    "temperature": 0.1,
+    "maxTokens": 400,
+    "batchSize": 3,
+    "requestDelay": 500,
+    "maxRetries": 3
+  },
+  "categories": {
+    "社会新闻": "民生福祉、公共安全、教育文化、法律案件、社会事件、公共政策等社会类新闻",
+    "娱乐新闻": "影视作品、明星动态、娱乐产业、综艺节目、音乐娱乐等娱乐类新闻",
+    "科技新闻": "科技创新、数码产品、互联网发展、AI技术、科研成果等科技类新闻",
+    "体育新闻": "体育赛事、运动员动态、体育产业、比赛结果、奥运会等体育类新闻",
+    "财经新闻": "经济政策、金融市场、企业发展、股市行情、企业财报等财经类新闻"
+  },
+  "filtering": {
+    "requireHotTopic": false,
+    "hotTopicCriteria": "具有争议性、社会影响力、话题性或关注度高的特征"
+  }
+}

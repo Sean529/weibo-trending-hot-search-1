@@ -65,10 +65,3 @@ ${
   }
 <!-- END -->`;
 }
-
-export function createArchive(words: Word[], date: string): string {
-  return `# ${date}\n
-共 ${words.length} 条\n
-${createList(words)}
-`;
-}

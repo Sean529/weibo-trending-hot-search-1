@@ -228,7 +228,7 @@
         <label for="type-filter" style="font-size: 14px; color: #666; margin-right: 8px;">筛选类型:</label>
         <select id="type-filter" style="padding: 6px 12px; border-radius: 4px; border: 1px solid #ddd; font-size: 14px;">
           <option value="all">全部</option>
-          <option value="社会">社会</option>
+          <option value="社会新闻">社会新闻</option>
         </select>
       </div>
       <!-- 筛选 UI 结束 -->
@@ -336,13 +336,88 @@
         return false;
       }
 
-      // TODO: 实现筛选功能，当前仅UI，未做实际筛选
+      // AI筛选功能实现
       document.getElementById('type-filter').addEventListener('change', function(e) {
         const selectedType = e.target.value;
-        // TODO: 根据 selectedType 筛选展示的词条（如 type 字段为“社会”）
-        // 目前仅做UI反馈，无实际筛选逻辑
-        showNotification('筛选类型: ' + (selectedType === 'all' ? '全部' : selectedType));
+        
+        if (selectedType === 'all') {
+          // 显示所有项目
+          document.querySelectorAll('.trending-item').forEach(item => {
+            item.style.display = 'flex';
+          });
+          showNotification('显示全部热搜');
+        } else {
+          // 从API获取筛选后的数据
+          showNotification(`正在加载${selectedType}...`);
+          
+          fetch(`/api/filtered?category=${encodeURIComponent(selectedType)}`)
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                // 重新渲染热搜列表
+                const content = document.querySelector('.content');
+                const stats = document.querySelector('.stats');
+                
+                if (data.data.length === 0) {
+                  content.innerHTML = `
+                    <div class="empty-state">
+                      <div class="icon">📭</div>
+                      <p>暂无${selectedType}数据</p>
+                      <p style="font-size: 12px; color: #999; margin-top: 10px;">
+                        提示：需要先运行AI筛选工具对数据进行分类
+                      </p>
+                    </div>
+                  `;
+                } else {
+                  content.innerHTML = generateTrendingItemsFromData(data.data);
+                }
+                
+                // 更新统计信息
+                stats.innerHTML = `
+                  共 ${data.filteredCount} 条${selectedType} (总计 ${data.totalCount} 条热搜) | 点击标题打开微博 | 点击复制按钮复制标题
+                `;
+                
+                showNotification(`已显示 ${data.filteredCount} 条${selectedType}`);
+              } else {
+                showNotification('加载失败: ' + data.error);
+              }
+            })
+            .catch(err => {
+              console.error('筛选失败:', err);
+              showNotification('筛选失败，请稍后再试');
+            });
+        }
       });
+      
+      // 从API数据生成HTML
+      function generateTrendingItemsFromData(words) {
+        if (words.length === 0) {
+          return `
+            <div class="empty-state">
+              <div class="icon">📭</div>
+              <p>暂无数据，请稍后再试</p>
+            </div>
+          `;
+        }
+
+        return words.map((word, index) => `
+          <div class="trending-item">
+            <div class="rank ${index < 3 ? "top3" : index < 10 ? "top10" : ""}">${index + 1}</div>
+            <div class="title" onclick="openWeibo('${word.url}')" title="点击打开微博">${escapeHtmlClient(word.title)}</div>
+            <button class="copy-btn" onclick="copyTitle('${escapeHtmlClient(word.title).replace(/'/g, "\\'")}', this)">复制</button>
+          </div>
+        `).join("");
+      }
+      
+      // 客户端HTML转义
+      function escapeHtmlClient(text) {
+        return text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
     </script>
   </body>
 </html>

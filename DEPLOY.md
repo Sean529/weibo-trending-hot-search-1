@@ -108,7 +108,6 @@ WEIBO_COOKIE=your_custom_cookie (可选)
 4. **存储到 GitHub**: 通过 GitHub API 保存到仓库
 5. **文件更新**:
    - `raw/YYYY-MM-DD.json` - 原始 JSON 数据
-   - `archives/YYYY-MM-DD.md` - 归档页面
    - `README.md` - 实时热搜列表
 
 ### 环境差异

@@ -3,7 +3,9 @@
 import { scrapeTrendingTopics } from "./scraper.ts";
 import { loadFromStorage } from "./storage.ts";
 import { format } from "std/datetime/mod.ts";
-import type { Word } from "./types.ts";
+import { filterWordsByCategory } from "./ai-filter.ts";
+import { getCategoryData, loadAIClassifiedData } from "./ai-storage.ts";
+import type { Word, FilterCategory } from "./types.ts";
 
 // HTML转义函数
 function escapeHtml(text: string): string {
@@ -191,6 +193,78 @@ async function handler(request: Request): Promise<Response> {
           data: todayWords,
           date: today,
           count: todayWords.length,
+          updateTime: new Date().toISOString(),
+        }),
+        {
+          headers: {
+            "content-type": "application/json; charset=utf-8",
+            "cache-control": "public, max-age=300", // 缓存5分钟
+          },
+        },
+      );
+    } catch (error) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: `服务暂时不可用: ${(error as Error).message}`,
+          data: [],
+        }),
+        {
+          status: 500,
+          headers: { "content-type": "application/json; charset=utf-8" },
+        },
+      );
+    }
+  }
+
+  // GET /api/filtered - 返回按类型筛选的热搜数据
+  if (url.pathname === "/api/filtered") {
+    try {
+      const today = format(new Date(), "yyyy-MM-dd");
+      const category = url.searchParams.get("category") as FilterCategory | null;
+      
+      let todayWords: Word[] = [];
+      let filteredWords: Word[] = [];
+
+      try {
+        todayWords = await loadFromStorage(today);
+      } catch (error) {
+        console.error("Failed to load from storage:", (error as Error).message);
+        return new Response(
+          JSON.stringify({
+            success: false,
+            error: `数据加载失败: ${(error as Error).message}`,
+            data: [],
+          }),
+          {
+            headers: { "content-type": "application/json; charset=utf-8" },
+          },
+        );
+      }
+
+      // 优先使用AI分类数据，fallback到基础筛选
+      if (category) {
+        try {
+          // 尝试从AI分类数据获取
+          filteredWords = await getCategoryData(today, category);
+          console.log(`AI分类数据: ${category} - ${filteredWords.length} 条`);
+        } catch (error) {
+          console.log(`AI分类数据不可用，使用基础筛选: ${(error as Error).message}`);
+          // fallback到基础关键词筛选
+          filteredWords = filterWordsByCategory(todayWords, category);
+        }
+      } else {
+        filteredWords = todayWords;
+      }
+
+      return new Response(
+        JSON.stringify({
+          success: true,
+          data: filteredWords,
+          date: today,
+          category: category || 'all',
+          totalCount: todayWords.length,
+          filteredCount: filteredWords.length,
           updateTime: new Date().toISOString(),
         }),
         {

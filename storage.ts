@@ -1,5 +1,5 @@
 import type { Word } from "./types.ts";
-import { createArchive, createReadme } from "./utils.ts";
+import { createReadme } from "./utils.ts";
 
 // GitHub API 配置
 const GITHUB_API_BASE = "https://api.github.com";
@@ -143,7 +143,6 @@ export async function saveToStorage(
   if (isDenoDeployment) {
     // 在 Deno Deploy 环境中保存到 GitHub
     const jsonContent = JSON.stringify(words, null, 2);
-    const archiveContent = createArchive(words, date);
     const readmeContent = await generateUpdatedReadme(words);
 
     // 并行保存三个文件
@@ -154,11 +153,6 @@ export async function saveToStorage(
         `Update trending data for ${date} - ${timestamp}`,
       ),
       saveFileToGitHub(
-        `archives/${date}.md`,
-        archiveContent,
-        `Update archive for ${date} - ${timestamp}`,
-      ),
-      saveFileToGitHub(
         "README.md",
         readmeContent,
         `Update README with latest trending topics - ${timestamp}`,
@@ -167,10 +161,8 @@ export async function saveToStorage(
   } else {
     // 本地环境保存到文件系统
     const jsonContent = JSON.stringify(words, null, 2);
-    const archiveContent = createArchive(words, date);
 
     await Deno.writeTextFile(`raw/${date}.json`, jsonContent);
-    await Deno.writeTextFile(`archives/${date}.md`, archiveContent);
 
     // 更新 README
     const readmeContent = await createReadme(words);

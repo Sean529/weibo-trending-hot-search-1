@@ -23,7 +23,6 @@ deno task test
 - 自动抓取微博热搜榜
 - 数据保存到 `raw/` 目录
 - 更新 `README.md` 显示今日热搜
-- 生成归档到 `archives/` 目录
 
 ## 自动化
 

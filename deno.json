@@ -3,7 +3,15 @@
   "tasks": {
     "start": "deno run --allow-net --allow-read --allow-write --allow-env --unstable-cron main.ts",
     "test": "deno test --allow-net --allow-read --allow-write --allow-env utils.test.ts",
-    "deploy": "deno run --allow-net --allow-read --allow-write --allow-env --unstable-cron deploy-cron.ts"
+    "deploy": "deno run --allow-net --allow-read --allow-write --allow-env --unstable-cron deploy-cron.ts",
+    "ai-filter": "deno run --allow-net --allow-read --allow-write --allow-env ai-filter-improved.ts",
+    "ai-social": "deno run --allow-net --allow-read --allow-write --allow-env ai-filter-improved.ts --category 社会新闻",
+    "ai-entertainment": "deno run --allow-net --allow-read --allow-write --allow-env ai-filter-improved.ts --category 娱乐新闻", 
+    "ai-tech": "deno run --allow-net --allow-read --allow-write --allow-env ai-filter-improved.ts --category 科技新闻",
+    "ai-sports": "deno run --allow-net --allow-read --allow-write --allow-env ai-filter-improved.ts --category 体育新闻",
+    "ai-finance": "deno run --allow-net --allow-read --allow-write --allow-env ai-filter-improved.ts --category 财经新闻",
+    "ai-stats": "deno run --allow-net --allow-read --allow-write --allow-env ai-filter-improved.ts --stats",
+    "ai-test": "deno run --allow-net --allow-read --allow-write --allow-env ai-filter-improved.ts --limit 5"
   },
   "fmt": {
     "lineWidth": 120,
